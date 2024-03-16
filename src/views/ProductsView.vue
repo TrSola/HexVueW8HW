@@ -49,6 +49,7 @@
                   <!-- <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i> -->
                 </a>
                 <div class="card-body p-0">
+                  {{product.id}}
                   <h4 class="mb-0 mt-3">
                     <RouterLink class="mb-0 mt-3" :to="`/product/${product.id}`">{{product.title}}</RouterLink>
                   </h4>

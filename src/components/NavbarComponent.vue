@@ -23,6 +23,7 @@
 <script setup>
 // import axios from 'axios'
 import '../assets/all.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCartStore } from '../stores/cartStore'

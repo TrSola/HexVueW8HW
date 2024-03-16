@@ -59,6 +59,7 @@
         </div>
       </div>
       <h3 class="fw-bold">看看更多商品圖</h3>
+      <div>
       <div class="swiper-container mt-4 mb-5">
         <div class="swiper-wrapper" >
           <div class="swiper-slide" v-for="item in filteredProducts" :key="item.id">
@@ -67,7 +68,9 @@
               <a href="#" class="text-dark">
               </a>
               <div class="card-body p-0">
-                <h4 class="mb-0 mt-3">{{ item.title }}</h4>
+                <h4 class="mb-0 mt-3">
+                <RouterLink class="mb-0 mt-3" :to="`/product/${item.id}`"  @click="refreshPage">{{item.title}}</RouterLink>
+              </h4>
                 <p class="card-text mb-0">${{ item.price }} <span class="text-muted "><del>${{ item.origin_price }}</del></span></p>
                 <p class="text-muted mt-3"></p>
               </div>
@@ -76,12 +79,13 @@
         </div>
       </div>
     </div>
+    </div>
 </template>
 
 <script setup>
 import '../assets/all.css'
 import { onMounted, ref, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { useCartStore } from '../stores/cartStore'
 import Swiper from 'swiper'
@@ -94,6 +98,14 @@ const products = ref({})
 const pagination = ref({})
 const cartStoreFromPinia = useCartStore()
 const { addToCart } = cartStoreFromPinia
+const router = useRouter()
+
+router.afterEach(() => {
+  setTimeout(() => {
+    window.scrollTo(0, 0)
+  }, 100)
+  location.reload()
+})
 
 const getProduct = () => {
   const { id } = route.params
@@ -130,6 +142,10 @@ const filteredProducts = computed(() => {
   return products.value.filter(item => item.id !== product.value.id)
 })
 
+const refreshPage = () => {
+  location.reload()
+}
+
 onMounted(() => {
   getProduct()
   getData()
@@ -141,12 +157,16 @@ onMounted(() => {
       delay: 2500,
       disableOnInteraction: false
     },
-    slidesPerView: 2,
-    spaceBetween: 10,
+    slidesPerView: 'auto',
+    spaceBetween: 0,
     breakpoints: {
       767: {
         slidesPerView: 3,
         spaceBetween: 30
+      },
+      374: {
+        slidesPerView: 5,
+        spaceBetween: 25
       }
     },
     navigation: {
