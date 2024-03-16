@@ -11,7 +11,7 @@
               <RouterLink class="nav-item nav-link me-4" to="/products">產品頁面</RouterLink>
               <RouterLink class="nav-item nav-link me-4 position-relative" to="/cart">
                 <i class="bi bi-cart"></i>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger rwdNav">
                   {{ carts?.carts?.length }}
   </span>
               </RouterLink>
@@ -34,3 +34,18 @@ onMounted(() => {
   getCart()
 })
 </script>
+
+<style>
+@media (max-width: 768px) {
+  .rwdNav {
+    top: 50%;
+  }
+}
+
+@media (min-width: 769px) {
+  .rwdNav {
+    top: 0;
+  }
+}
+
+</style>
