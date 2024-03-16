@@ -183,6 +183,5 @@ onMounted(() => {
 <style>
 .swiper-container-wrapper {
   overflow-x: auto; /* 垂直方向滾動 */
-  white-space: nowrap; /* 不斷行 */
 }
 </style>
