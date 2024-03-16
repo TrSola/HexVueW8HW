@@ -159,16 +159,16 @@ onMounted(() => {
       delay: 2500,
       disableOnInteraction: false
     },
-    slidesPerView: 'auto',
-    spaceBetween: 0,
+    slidesPerView: 3,
+    spaceBetween: 10,
     breakpoints: {
       767: {
-        slidesPerView: 3,
+        slidesPerView: 2,
         spaceBetween: 30
       },
       374: {
-        slidesPerView: 5,
-        spaceBetween: 25
+        slidesPerView: 1.2,
+        spaceBetween: 5
       }
     },
     navigation: {
