@@ -189,6 +189,7 @@ const getCart = () => {
 }
 
 onMounted(() => {
+  window.scrollTo(0, 0)
   getCart()
 })
 </script>
