@@ -60,6 +60,7 @@
       </div>
       <h3 class="fw-bold">看看更多商品圖</h3>
       <div>
+    <div class="swiper-container-wrapper">
       <div class="swiper-container mt-4 mb-5">
         <div class="swiper-wrapper" >
           <div class="swiper-slide" v-for="item in filteredProducts" :key="item.id">
@@ -79,7 +80,8 @@
         </div>
       </div>
     </div>
-    </div>
+  </div>
+</div>
 </template>
 
 <script setup>
@@ -179,4 +181,8 @@ onMounted(() => {
 </script>
 
 <style>
+.swiper-container-wrapper {
+  overflow-x: auto; /* 垂直方向滾動 */
+  white-space: nowrap; /* 不斷行 */
+}
 </style>
