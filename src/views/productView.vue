@@ -63,19 +63,20 @@
     <div class="swiper-container-wrapper">
       <div class="swiper-container mt-4 mb-5">
         <div class="swiper-wrapper" >
-          <div class="swiper-slide" v-for="item in filteredProducts" :key="item.id">
+          <div class="swiper-slide" v-for="item in filteredProducts" :key="item.id"><RouterLink class="mb-0 mt-3" :to="`/product/${item.id}`"  @click="refreshPage">
             <div class="card border-0 mb-4 position-relative position-relative" v-if="item.id !== product.id">
-              <img :src="item.imageUrl" class="card-img-top rounded-0 object-fit-cover" alt="..." height="350">
+                <img :src="item.imageUrl" class="card-img-top rounded-0 object-fit-cover" alt="..." height="350">
               <a href="#" class="text-dark">
               </a>
               <div class="card-body p-0">
                 <h4 class="mb-0 mt-3">
-                <RouterLink class="mb-0 mt-3" :to="`/product/${item.id}`"  @click="refreshPage">{{item.title}}</RouterLink>
+                {{item.title}}
               </h4>
                 <p class="card-text mb-0">${{ item.price }} <span class="text-muted "><del>${{ item.origin_price }}</del></span></p>
                 <p class="text-muted mt-3"></p>
               </div>
             </div>
+          </RouterLink>
           </div>
         </div>
       </div>

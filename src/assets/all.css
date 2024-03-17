@@ -47,7 +47,7 @@ table {
 	border-spacing: 0;
 }
 
-@charset "UTF-8";
+/* @charset "UTF-8"; */
 /*!
  * Bootstrap  v5.3.2 (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors
@@ -12898,4 +12898,3 @@ textarea.form-control-lg {
     width: 50% !important;
   }
 }/*# sourceMappingURL=all.css.map */
-

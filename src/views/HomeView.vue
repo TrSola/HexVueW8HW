@@ -7,7 +7,7 @@
           <div class="col-md-4 text-center">
             <h2>歡迎光臨首席動物園</h2>
             <p class="text-muted mb-0">這裡是一個充滿生機和活力的地方，您可以看到各種各樣的動物，從溫馴可愛的小動物，如夜久小羊，到雄偉壯麗的大型動物，如凱傑老虎，每一個都展現著自己獨特的魅力和生命力。</p>
-            <router-link to="/products" class="btn btn-dark rounded-0 mt-6">去逛逛</router-link>
+            <router-link to="/products" class="btn btn-dark rounded-0 mt-6 router-link-active">去逛逛</router-link>
           </div>
         </div>
       </div>
@@ -15,6 +15,7 @@
     <div class="container">
       <div class="row mt-5" v-if="animalProducts.length > 0">
         <div class="col-md-4 mt-md-4">
+          <RouterLink :to="`/product/${animalProducts[0].id}`">
           <div class="card border-0 mb-4">
             <img
               :src="animalProducts[0].imageUrl"
@@ -23,7 +24,7 @@
               alt="產品圖片1"
             />
             <div class="card-body text-center">
-              <RouterLink :to="`/product/${animalProducts[0].id}`"><h4>{{ animalProducts[0].title }}</h4></RouterLink>
+              <h4>{{ animalProducts[0].title }}</h4>
               <div class="d-flex justify-content-between">
                 <p class="card-text text-muted mb-0">
                   {{ animalProducts[0].description }}
@@ -31,8 +32,10 @@
               </div>
             </div>
           </div>
+        </RouterLink>
         </div>
         <div class="col-md-4 mt-md-4">
+          <RouterLink :to="`/product/${animalProducts[1].id}`">
           <div class="card border-0 mb-4">
             <img
               :src="animalProducts[1].imageUrl"
@@ -41,7 +44,7 @@
               alt="產品圖片1"
             />
             <div class="card-body text-center">
-              <RouterLink :to="`/product/${animalProducts[1].id}`"><h4>{{ animalProducts[1].title }}</h4></RouterLink>
+              <h4>{{ animalProducts[1].title }}</h4>
               <div class="d-flex justify-content-between">
                 <p class="card-text text-muted mb-0">
                   {{ animalProducts[1].description }}
@@ -49,8 +52,10 @@
               </div>
             </div>
           </div>
+        </RouterLink>
         </div>
         <div class="col-md-4 mt-md-4">
+          <RouterLink :to="`/product/${animalProducts[2].id}`">
           <div class="card border-0 mb-4">
             <img
               :src="animalProducts[2].imageUrl"
@@ -59,7 +64,7 @@
               alt="產品圖片1"
             />
             <div class="card-body text-center">
-              <RouterLink :to="`/product/${animalProducts[2].id}`"><h4>{{ animalProducts[2].title }}</h4></RouterLink>
+              <h4>{{ animalProducts[2].title }}</h4>
               <div class="d-flex justify-content-between">
                 <p class="card-text text-muted mb-0">
                   {{ animalProducts[2].description }}
@@ -67,6 +72,7 @@
               </div>
             </div>
           </div>
+        </RouterLink>
         </div>
       </div>
     </div>
@@ -114,24 +120,28 @@
       </div>
     </div>
     <div class="container my-7" v-if="foodProducts.length > 0">
+      <RouterLink :to="`/product/${foodProducts[0].id}`">
       <div class="row">
         <div class="col-md-6">
-          <img :src="foodProducts[0].imageUrl" alt="" class="img-fluid object-fit-cover" style="height: 450px; width: 100%">
+            <img :src="foodProducts[0].imageUrl" alt="" class="img-fluid object-fit-cover" style="height: 450px; width: 100%">
         </div>
         <div class="col-md-4 m-auto text-center">
-          <RouterLink :to="`/product/${foodProducts[0].id}`"><h4 class="mt-4">{{ foodProducts[0].title }}</h4></RouterLink>
+          <h4 class="mt-4">{{ foodProducts[0].title }}</h4>
           <p class="text-muted">{{ foodProducts[0].description }}</p>
         </div>
       </div>
+    </RouterLink>
+    <RouterLink :to="`/product/${foodProducts[1].id}`">
       <div class="row flex-row-reverse justify-content-between mt-4">
         <div class="col-md-6">
           <img :src="foodProducts[1].imageUrl" alt="" class="img-fluid object-fit-cover" style="height: 450px; width: 100%">
         </div>
         <div class="col-md-4 m-auto text-center">
-          <RouterLink :to="`/product/${foodProducts[1].id}`"><h4 class="mt-4">{{ foodProducts[1].title }}</h4></RouterLink>
+          <h4 class="mt-4">{{ foodProducts[1].title }}</h4>
           <p class="text-muted">{{ foodProducts[1].description }}</p>
         </div>
       </div>
+    </RouterLink>
     </div>
 </template>
 

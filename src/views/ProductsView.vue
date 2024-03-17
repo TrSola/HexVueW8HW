@@ -43,6 +43,7 @@
           </template>
           <div class="row">
             <div class="col-md-6" v-for="product in products" :key="product.id">
+              <RouterLink class="mb-0 mt-3" :to="`/product/${product.id}`">
               <div class="card border-0 mb-4 position-relative position-relative">
                 <img :src="product.imageUrl" class="card-img-top rounded-0 object-fit-cover" alt="商品圖片" height="500">
                 <a href="#" class="text-dark">
@@ -50,12 +51,13 @@
                 </a>
                 <div class="card-body p-0">
                   <h4 class="mb-0 mt-3">
-                    <RouterLink class="mb-0 mt-3" :to="`/product/${product.id}`">{{product.title}}</RouterLink>
+                    {{product.title}}
                   </h4>
                   <p class="card-text mb-0">NT${{product.price}} <span class="text-muted "><del>NT${{product.origin_price}}</del></span></p>
                   <p class="text-muted mt-3"></p>
                 </div>
               </div>
+            </RouterLink>
             </div>
             </div>
           </div>
