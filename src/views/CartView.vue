@@ -168,7 +168,7 @@
         </div>
       </div>
          <div class="d-flex justify-content-end mb-5" v-if="carts.carts && carts.carts.length !== 0">
-     <router-link to="/checkOut" class="btn btn-dark">去結帳</router-link></div>
+     <router-link to="/checkOut" class="btn btn-dark">馬上去結帳</router-link></div>
        </div>
      </div>
 </template>
