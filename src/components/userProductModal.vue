@@ -13,7 +13,7 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col-sm-6">
-                  <img class="img-fluid" :src="img" alt="" v-for="img in props.product.imagesUrl" :key="img.id" style=" height: 200px ;width: 200px;
+                  <img class="img-fluid mb-2 object-fit-cover" :src="img" alt="" v-for="img in props.product.imagesUrl" :key="img.id" style=" height: 200px ;width: 200px;
                       background-size: cover; padding-right: 5px;">
             </div>
                 <div class="col-sm-6">
@@ -28,7 +28,7 @@
                       <input type="number" class="form-control"
                       v-model.number="qty"
                              min="1">
-                      <button type="button" class="btn btn-primary" @click="addToCart">加入購物車(內)</button>
+                      <button type="button" class="btn btn-primary" @click="addToCart">加入購物車</button>
             </div>
             </div>
             </div>
