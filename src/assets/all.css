@@ -12849,3 +12849,8 @@ textarea.form-control-lg {
     width: 50% !important;
   }
 }/*# sourceMappingURL=all.css.map */
+
+a:hover {
+  text-decoration: none;
+}
+
