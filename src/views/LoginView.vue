@@ -27,7 +27,7 @@
                 <label for='password'>Password</label>
               </div>
               <button
-                class='btn btn-primary btn-lg w-100 mt-3'
+                class='btn btn-dark btn-lg w-100 mt-3'
                 type='button'
                 @click.prevent='login'
               >
