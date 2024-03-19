@@ -121,8 +121,8 @@
                    </div>
                  </td>
                  <td>
-                   <div class='input-group input-group-sm'>
-                     <div class='input-group mb-3'>
+                   <div class='input-group input-group-sm mb-1 mt-1'>
+                     <div class='input-group'>
                        <input
                          v-model.number='cartItem.qty'
                          @blur='updateCart(cartItem)'
