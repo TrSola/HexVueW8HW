@@ -27,10 +27,10 @@
         </div>
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end align-items-start text-white">
           <div class="mb-md-0 mb-1">
-            <p class="mb-0">02-3456-7890</p>
-            <p class="mb-0">service@mail.com</p>
+            <p class="mb-0">01-2345-6789</p>
+            <p class="mb-0">Willy@gmail.com</p>
           </div>
-          <p class="mb-0">© 2020 LOGO All Rights Reserved.</p>
+          <p class="mb-0">© 2023 LOGO All Rights Reserved.</p>
         </div>
       </div>
     </div>

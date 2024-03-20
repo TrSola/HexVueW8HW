@@ -6,8 +6,8 @@
         <div class="row justify-content-center my-auto">
           <div class="col-md-4 text-center">
             <h2>歡迎光臨首席動物園</h2>
-            <p class="text-muted mb-0">這裡是一個充滿生機和活力的地方，您可以看到各種各樣的動物，從溫馴可愛的小動物，如夜久小羊，到雄偉壯麗的大型動物，如凱傑老虎，每一個都展現著自己獨特的魅力和生命力。</p>
-            <router-link to="/products" class="btn btn-dark rounded-0 mt-6 router-link-active">去逛逛</router-link>
+            <p class="text-muted mb-0">這裡是個充滿生機和活力的地方，您可以看到各種動物，從溫馴可愛的小動物，如夜久小羊，到雄偉壯麗的大型動物，如凱傑老虎，每一個都展現著自己獨特的魅力和生命力。</p>
+            <router-link to="/products" class="btn btn-dark rounded-0 mt-4 router-link-active">去逛逛</router-link>
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@
               <div class="row justify-content-center py-7">
                 <div class="col-md-6 text-center">
                   <h3>除了可愛的動物 還有好吃的食品哦</h3>
-                  <p class="my-5">同時，我們還提供了豐富多彩的美食體驗，從地道的當地美食到國際風味的精緻料理，每一道菜品都是精心製作而成，讓您的味蕾享受到極致的愉悅。</p>
+                  <p class="my-5">能在這茫茫人海之中相遇，便是一種難得的緣分，又彷彿是宇宙間的安排，大家才得以相聚於此，所以，珍惜還能待在一起的時光吧！</p>
                   <p><small>無論您是來欣賞動物、品嚐美食，還是放鬆心情，這裡都能滿足您的所有需求，讓您度過一個充滿歡樂和美好回憶的時光！</small></p>
                 </div>
               </div>
@@ -108,14 +108,14 @@
               </div>
             </div> -->
           </div>
-          <a class="carousel-control-prev" href="#carouselExampleControls"  role="button" data-slide="prev">
+          <!-- <a class="carousel-control-prev" href="#carouselExampleControls"  role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
           </a>
           <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
-          </a>
+          </a> -->
         </div>
       </div>
     </div>
