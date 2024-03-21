@@ -1,4 +1,3 @@
-<!-- eslint-disable camelcase -->
 <script setup>
 import { ref, watch } from 'vue'
 
@@ -13,25 +12,31 @@ const props = defineProps({
 
 const emits = defineEmits(['update-coupon'])
 
-const tempCoupon = ref({})
-const due_date = ref('')
+const tempCoupon = ref({
+  dueDate: ''
+})
+const dueDate = ref('')
 
 watch(
   () => props.coupon,
   (value) => {
+    // 更新tempCoupon对象
     tempCoupon.value = value
-    // 將時間格式改為 YYYY-MM-DD
-    const dateAndTime = new Date(tempCoupon.value.due_date * 1000)
-      .toISOString()
-      .split('T')
-    ;[due_date.value] = dateAndTime
+    // 将时间格式改为 YYYY-MM-DD
+    if (tempCoupon.value && tempCoupon.value.dueDate) {
+      const dateAndTime = new Date(tempCoupon.value.dueDate * 1000)
+        .toISOString()
+        .split('T')
+      // 更新dueDate属性
+      tempCoupon.value.dueDate = dateAndTime[0]
+    }
   }
 )
 
 watch(
-  () => due_date.value,
+  () => dueDate.value,
   (value) => {
-    tempCoupon.value.due_date = Math.floor(new Date(value) / 1000)
+    tempCoupon.value.dueDate = Math.floor(new Date(value) / 1000)
   }
 )
 
@@ -87,12 +92,12 @@ defineExpose({
             />
           </div>
           <div class="mb-3">
-            <label for="due_date">到期日</label>
+            <label for="dueDate">到期日</label>
             <input
               type="date"
               class="form-control"
-              id="due_date"
-              v-model="due_date"
+              id="dueDate"
+              v-model="dueDate"
             />
           </div>
           <div class="mb-3">
