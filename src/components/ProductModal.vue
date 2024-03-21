@@ -44,11 +44,21 @@
                       alt="主要圖片"
                     />
                     <div class="mb-3">
-                <label for="customFile" class="form-label">或 上傳圖片
-                  <i class="fas fa-spinner fa-spin" v-if="fileStatus.fileUploading"></i>
-                </label>
-                <input type="file" id="customFile" class="form-control" ref="fileInputRef" @change="uploadFile" />
-              </div>
+                      <label for="customFile" class="form-label"
+                        >或 上傳圖片
+                        <i
+                          class="fas fa-spinner fa-spin"
+                          v-if="fileStatus.fileUploading"
+                        ></i>
+                      </label>
+                      <input
+                        type="file"
+                        id="customFile"
+                        class="form-control"
+                        ref="fileInputRef"
+                        @change="uploadFile"
+                      />
+                    </div>
                   </div>
                   <h3>新增更多圖片</h3>
                   <template
@@ -270,15 +280,18 @@ const createImages = () => {
   tempProductInProductModal.value.imagesUrl.push('')
 }
 
-watch(() => props.tempProduct, (value) => {
-  tempProductInProductModal.value = value
-  if (!tempProductInProductModal.value.imagesUrl) {
-    tempProductInProductModal.value.imagesUrl = []
+watch(
+  () => props.tempProduct,
+  (value) => {
+    tempProductInProductModal.value = value
+    if (!tempProductInProductModal.value.imagesUrl) {
+      tempProductInProductModal.value.imagesUrl = []
+    }
+    if (!tempProductInProductModal.value.imageUrl) {
+      tempProductInProductModal.value.imageUrl = ''
+    }
   }
-  if (!tempProductInProductModal.value.imageUrl) {
-    tempProductInProductModal.value.imageUrl = ''
-  }
-})
+)
 
 const uploadFile = () => {
   const uploadedFile = fileInputRef.value.files[0]
@@ -288,25 +301,28 @@ const uploadFile = () => {
   const url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/upload`
   fileStatus.value.fileUploading = true
 
-  axios.post(url, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  }).then((response) => {
-    fileStatus.value.fileUploading = false
-    tempProductInProductModal.value.imageUrl = response.data.imageUrl
-    fileInputRef.value.value = ''
-    Toast.fire({
-      icon: 'success',
-      title: '圖片上傳成功'
+  axios
+    .post(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     })
-  }).catch((error) => {
-    fileStatus.value.fileUploading = false
-    Toast.fire({
-      icon: 'error',
-      title: error.response.data.message
+    .then((response) => {
+      fileStatus.value.fileUploading = false
+      tempProductInProductModal.value.imageUrl = response.data.imageUrl
+      fileInputRef.value.value = ''
+      Toast.fire({
+        icon: 'success',
+        title: '圖片上傳成功'
+      })
     })
-  })
+    .catch((error) => {
+      fileStatus.value.fileUploading = false
+      Toast.fire({
+        icon: 'error',
+        title: error.response.data.message
+      })
+    })
 }
 
 defineExpose({

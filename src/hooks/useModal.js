@@ -10,13 +10,17 @@ export default () => {
     modal.value = new BsModal(modalRef.value)
   })
 
+  const openModal = () => {
+    modal.value.show()
+  }
+
+  const hideModal = () => {
+    modal.value.hide()
+  }
+
   return {
     modalRef,
-    openModal () {
-      modal.value.show()
-    },
-    hideModal () {
-      modal.value.hide()
-    }
+    openModal,
+    hideModal
   }
 }

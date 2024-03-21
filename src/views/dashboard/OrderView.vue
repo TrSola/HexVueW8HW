@@ -36,17 +36,20 @@ const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env
 const getOrders = (currentPage = 1) => {
   const url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/orders?page=${currentPage}`
   isLoading.value = true
-  axios.get(url, tempProduct).then((response) => {
-    orders.value = response.data.orders
-    pagination.value = response.data.pagination
-    isLoading.value = false
-  }).catch(() => {
-    isLoading.value = false
-    Toast.fire({
-      icon: 'warning',
-      title: '取得訂單失敗'
+  axios
+    .get(url, tempProduct)
+    .then((response) => {
+      orders.value = response.data.orders
+      pagination.value = response.data.pagination
+      isLoading.value = false
     })
-  })
+    .catch(() => {
+      isLoading.value = false
+      Toast.fire({
+        icon: 'warning',
+        title: '取得訂單失敗'
+      })
+    })
 }
 
 const openModal = (item) => {
@@ -66,41 +69,47 @@ const updatePaid = (item) => {
     is_paid: item.is_paid
   }
   isLoading.value = true
-  axios.put(api, { data: paid }).then((response) => {
-    isLoading.value = false
-    orderModalRef.value.hideModal()
-    getOrders(currentPage.value)
-    Toast.fire({
-      icon: 'success',
-      title: '修改付款狀態成功'
+  axios
+    .put(api, { data: paid })
+    .then((response) => {
+      isLoading.value = false
+      orderModalRef.value.hideModal()
+      getOrders(currentPage.value)
+      Toast.fire({
+        icon: 'success',
+        title: '修改付款狀態成功'
+      })
     })
-  }).catch((error) => {
-    isLoading.value = false
-    Toast.fire({
-      icon: 'warning',
-      title: error.response.data.message
+    .catch((error) => {
+      isLoading.value = false
+      Toast.fire({
+        icon: 'warning',
+        title: error.response.data.message
+      })
     })
-  })
 }
 
 const delOrder = () => {
   const url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/order/${tempOrder.value.id}`
   isLoading.value = true
-  axios.delete(url).then((response) => {
-    isLoading.value = false
-    delModalRef.value.hideModal()
-    getOrders(currentPage.value)
-    Toast.fire({
-      icon: 'success',
-      title: '刪除訂單成功'
+  axios
+    .delete(url)
+    .then((response) => {
+      isLoading.value = false
+      delModalRef.value.hideModal()
+      getOrders(currentPage.value)
+      Toast.fire({
+        icon: 'success',
+        title: '刪除訂單成功'
+      })
     })
-  }).catch((error) => {
-    isLoading.value = false
-    Toast.fire({
-      icon: 'warning',
-      title: error.response.data.message
+    .catch((error) => {
+      isLoading.value = false
+      Toast.fire({
+        icon: 'warning',
+        title: error.response.data.message
+      })
     })
-  })
 }
 
 getOrders()
@@ -175,10 +184,6 @@ getOrders()
     ref="orderModalRef"
     @update-paid="updatePaid"
   />
-  <DelModal
-    :item="tempOrder"
-    ref="delModalRef"
-    @del-item="delOrder"
-  />
+  <DelModal :item="tempOrder" ref="delModalRef" @del-item="delOrder" />
   <PaginationComponent :pages="pagination" @emit-pages="getOrders" />
 </template>

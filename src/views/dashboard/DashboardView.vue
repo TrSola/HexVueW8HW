@@ -34,10 +34,12 @@ const checkLogin = () => {
   const { VITE_APP_URL } = import.meta.env
   axios
     .post(`${VITE_APP_URL}/api/user/check`)
-    .then(() => Toast.fire({
-      icon: 'success',
-      title: '驗證身分成功'
-    }))
+    .then(() =>
+      Toast.fire({
+        icon: 'success',
+        title: '驗證身分成功'
+      })
+    )
     .catch((err) => {
       alert(err.response.data.message)
       router.push('/')
@@ -54,8 +56,7 @@ const logOut = () => {
       })
       document.cookie = 'WillyToken=;expires='
       router.push('/')
-    }
-    )
+    })
     .catch((err) => {
       alert(err.response.data.message)
     })
@@ -69,5 +70,4 @@ onMounted(() => {
 
   checkLogin()
 })
-
 </script>

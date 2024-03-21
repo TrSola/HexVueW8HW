@@ -7,7 +7,7 @@
   <br>
   <RouterLink to="/admin">後台快速通關(全部製作完成記得刪掉)</RouterLink> | -->
   <NavbarComponent></NavbarComponent>
-  <RouterView/>
+  <RouterView />
   <FooterComponent></FooterComponent>
 </template>
 

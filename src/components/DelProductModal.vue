@@ -23,7 +23,7 @@
           </div>
           <div class="modal-body">
             是否刪除
-            <strong class="text-danger">{{ tempProduct.title }}</strong>
+            <strong class="text-danger">{{ props.tempProduct.title }}</strong>
             商品(刪除後將無法恢復)。
           </div>
           <div class="modal-footer">
@@ -52,7 +52,6 @@
 import useModal from '@/hooks/useModal'
 import { defineProps, defineEmits } from 'vue'
 
-// eslint-disable-next-line no-unused-vars
 const props = defineProps(['tempProduct'])
 const emit = defineEmits(['confirmDelete'])
 const { openModal, hideModal, modalRef } = useModal()
