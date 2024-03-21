@@ -1,4 +1,3 @@
-<!-- eslint-disable camelcase -->
 <script setup>
 import { ref, watch } from 'vue'
 
@@ -14,7 +13,7 @@ const props = defineProps({
 const emits = defineEmits(['update-coupon'])
 
 const tempCoupon = ref({})
-const due_date = ref('')
+const dueDate = ref('')
 
 watch(
   () => props.coupon,
@@ -24,12 +23,12 @@ watch(
     const dateAndTime = new Date(tempCoupon.value.due_date * 1000)
       .toISOString()
       .split('T')
-    ;[due_date.value] = dateAndTime
+    ;[dueDate.value] = dateAndTime
   }
 )
 
 watch(
-  () => due_date.value,
+  () => dueDate.value,
   (value) => {
     tempCoupon.value.due_date = Math.floor(new Date(value) / 1000)
   }
@@ -87,12 +86,12 @@ defineExpose({
             />
           </div>
           <div class="mb-3">
-            <label for="due_date">到期日</label>
+            <label for="dueDate">到期日</label>
             <input
               type="date"
               class="form-control"
-              id="due_date"
-              v-model="due_date"
+              id="dueDate"
+              v-model="dueDate"
             />
           </div>
           <div class="mb-3">
