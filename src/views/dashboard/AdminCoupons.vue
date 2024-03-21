@@ -21,11 +21,6 @@ const Toast = Swal.mixin({
   timerProgressBar: true
 })
 
-// eslint-disable-next-line no-unused-vars
-const props = defineProps({
-  config: Object
-})
-
 const couponModalRef = ref(null)
 const delModalRef = ref(null)
 
