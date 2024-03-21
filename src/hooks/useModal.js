@@ -6,10 +6,6 @@ export default () => {
 
   const modal = ref(null)
 
-  onMounted(() => {
-    modal.value = new BsModal(modalRef.value)
-  })
-
   const openModal = () => {
     modal.value.show()
   }
@@ -17,7 +13,9 @@ export default () => {
   const hideModal = () => {
     modal.value.hide()
   }
-
+  onMounted(() => {
+    modal.value = new BsModal(modalRef.value)
+  })
   return {
     modalRef,
     openModal,

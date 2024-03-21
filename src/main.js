@@ -4,9 +4,7 @@ import Loading from 'vue-loading-overlay'
 import 'bootstrap/scss/bootstrap.scss'
 import 'bootstrap-icons/font/bootstrap-icons.scss'
 import router from './router'
-import {
-  Field, Form, ErrorMessage, defineRule, configure
-} from 'vee-validate'
+import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate'
 
 import * as AllRules from '@vee-validate/rules'
 
