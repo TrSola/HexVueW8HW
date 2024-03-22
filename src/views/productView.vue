@@ -1,3 +1,98 @@
+<script setup>
+import '@/assets/all.css'
+import { onMounted, ref, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import axios from 'axios'
+import { useCartStore } from '../stores/cartStore'
+import Swiper from 'swiper'
+import 'swiper/css'
+
+const { VITE_APP_URL: apiUrl, VITE_APP_PATH: apiPath } = import.meta.env
+const route = useRoute()
+const product = ref({})
+const products = ref({})
+const pagination = ref({})
+const cartStoreFromPinia = useCartStore()
+const { addToCart } = cartStoreFromPinia
+const router = useRouter()
+
+router.afterEach(() => {
+  setTimeout(() => {
+    window.scrollTo(0, 0)
+  }, 100)
+  location.reload()
+})
+
+const getProduct = () => {
+  const { id } = route.params
+  const url = `${apiUrl}/api/${apiPath}/product/${id}`
+  axios
+    .get(url)
+    .then((res) => {
+      product.value = res.data.product
+      product.value.num = 1
+    })
+    .catch((err) => {
+      alert(err.response.data.message)
+    })
+}
+
+const getData = (page = 1) => {
+  const { category = '' } = route.query
+  axios
+    .get(`${apiUrl}/api/${apiPath}/products?category=${category}&page=${page}`)
+    .then((res) => {
+      products.value = res.data.products
+      pagination.value = res.data.pagination
+    })
+    .catch((err) => alert(err.response.data.message))
+}
+
+const filteredProducts = computed(() => {
+  // 確保 products.value 是一個陣列，否則返回空陣列
+  if (!Array.isArray(products.value)) {
+    return []
+  }
+
+  // 篩選出符合條件的產品
+  return products.value.filter((item) => item.id !== product.value.id)
+})
+
+const refreshPage = () => {
+  location.reload()
+}
+
+onMounted(() => {
+  getProduct()
+  getData()
+  window.scrollTo(0, 0)
+  // eslint-disable-next-line no-unused-vars
+  const mySwiper = new Swiper('.swiper-container', {
+    loop: true,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false
+    },
+    slidesPerView: 3,
+    spaceBetween: 10,
+    breakpoints: {
+      767: {
+        slidesPerView: 2,
+        spaceBetween: 30
+      },
+      374: {
+        slidesPerView: 1.2,
+        spaceBetween: 5
+      }
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    }
+  })
+})
+</script>
+
 <template>
   <div class="container">
     <div class="row align-items-center">
@@ -12,7 +107,7 @@
               <img
                 :src="product.imageUrl"
                 class="d-block w-100 object-fit-cover"
-                alt="..."
+                :alt="`${product.title}的圖片`"
                 height="550"
               />
             </div>
@@ -150,103 +245,8 @@
   </div>
 </template>
 
-<script setup>
-import '../assets/all.css'
-import { onMounted, ref, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import axios from 'axios'
-import { useCartStore } from '../stores/cartStore'
-import Swiper from 'swiper'
-import 'swiper/css'
-
-const { VITE_APP_URL: apiUrl, VITE_APP_PATH: apiPath } = import.meta.env
-const route = useRoute()
-const product = ref({})
-const products = ref({})
-const pagination = ref({})
-const cartStoreFromPinia = useCartStore()
-const { addToCart } = cartStoreFromPinia
-const router = useRouter()
-
-router.afterEach(() => {
-  setTimeout(() => {
-    window.scrollTo(0, 0)
-  }, 100)
-  location.reload()
-})
-
-const getProduct = () => {
-  const { id } = route.params
-  const url = `${apiUrl}/api/${apiPath}/product/${id}`
-  axios
-    .get(url)
-    .then((res) => {
-      product.value = res.data.product
-      product.value.num = 1
-    })
-    .catch((err) => {
-      alert(err.response.data.message)
-    })
-}
-
-const getData = (page = 1) => {
-  const { category = '' } = route.query
-  axios
-    .get(`${apiUrl}/api/${apiPath}/products?category=${category}&page=${page}`)
-    .then((res) => {
-      products.value = res.data.products
-      pagination.value = res.data.pagination
-    })
-    .catch((err) => alert(err.response.data.message))
-}
-
-const filteredProducts = computed(() => {
-  // 確保 products.value 是一個陣列，否則返回空陣列
-  if (!Array.isArray(products.value)) {
-    return []
-  }
-
-  // 篩選出符合條件的產品
-  return products.value.filter((item) => item.id !== product.value.id)
-})
-
-const refreshPage = () => {
-  location.reload()
-}
-
-onMounted(() => {
-  getProduct()
-  getData()
-  window.scrollTo(0, 0)
-  // eslint-disable-next-line no-unused-vars
-  const mySwiper = new Swiper('.swiper-container', {
-    loop: true,
-    autoplay: {
-      delay: 2500,
-      disableOnInteraction: false
-    },
-    slidesPerView: 3,
-    spaceBetween: 10,
-    breakpoints: {
-      767: {
-        slidesPerView: 2,
-        spaceBetween: 30
-      },
-      374: {
-        slidesPerView: 1.2,
-        spaceBetween: 5
-      }
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
-    }
-  })
-})
-</script>
-
 <style>
 .swiper-container-wrapper {
-  overflow-x: auto; /* 垂直方向滾動 */
+  overflow-x: auto;
 }
 </style>

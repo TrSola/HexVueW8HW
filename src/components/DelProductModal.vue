@@ -1,3 +1,16 @@
+<script setup>
+import useModal from '@/hooks/useModal'
+
+const props = defineProps(['tempProduct'])
+const emit = defineEmits(['confirmDelete'])
+const { openModal, hideModal, modalRef } = useModal()
+
+defineExpose({
+  openModal,
+  hideModal
+})
+</script>
+
 <template>
   <div>
     <div
@@ -47,17 +60,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import useModal from '@/hooks/useModal'
-import { defineProps, defineEmits } from 'vue'
-
-const props = defineProps(['tempProduct'])
-const emit = defineEmits(['confirmDelete'])
-const { openModal, hideModal, modalRef } = useModal()
-
-defineExpose({
-  openModal,
-  hideModal
-})
-</script>

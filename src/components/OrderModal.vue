@@ -1,7 +1,4 @@
 <script setup>
-// eslint-disable-next-line no-unused-vars
-import axios from 'axios'
-
 import { ref, watch } from 'vue'
 
 import useModal from '@/hooks/useModal'

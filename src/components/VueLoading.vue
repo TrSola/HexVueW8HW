@@ -1,11 +1,3 @@
-<template>
-  <form @submit.prevent="submit" class="vl-parent" ref="formContainer">
-    <!-- your form inputs goes here-->
-    <label><input type="checkbox" v-model="fullPage" />Full page?</label>
-    <button type="submit">Login</button>
-  </form>
-</template>
-
 <script setup>
 import { ref } from 'vue'
 import { useLoading } from 'vue-loading-overlay' // 參照下方解說 (1)
@@ -33,3 +25,11 @@ const submit = () => {
   }, 5000)
 }
 </script>
+
+<template>
+  <form @submit.prevent="submit" class="vl-parent" ref="formContainer">
+    <!-- your form inputs goes here-->
+    <label><input type="checkbox" v-model="fullPage" />Full page?</label>
+    <button type="button">Login</button>
+  </form>
+</template>

@@ -1,3 +1,188 @@
+<script setup>
+import 'bootstrap/dist/css/bootstrap.min.css'
+import userProductModal from '@/components/UserProductModal.vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+import { SwalHandle } from '@/stores/sweetAlertStore'
+import Swal from 'sweetalert2'
+import { useCartStore } from '@/stores/cartStore'
+import { storeToRefs } from 'pinia'
+const { VITE_APP_URL: apiUrl, VITE_APP_PATH: apiPath } = import.meta.env
+
+const userProductModalRef = ref(null)
+const loadingStatus = ref({
+  loadingItem: ''
+})
+const products = ref([])
+const product = ref({})
+const couponCode = ref('')
+
+// const cart = ref({})
+const cartStoreFromPinia = useCartStore()
+const { carts } = storeToRefs(cartStoreFromPinia)
+// product
+const getProducts = () => {
+  const url = `${apiUrl}/api/${apiPath}/products`
+  axios
+    .get(url)
+    .then((response) => {
+      products.value = response.data.products
+    })
+    .catch((err) => {
+      alert(err.response.data.message)
+    })
+}
+
+const getProduct = (id) => {
+  const url = `${apiUrl}/api/${apiPath}/product/${id}`
+  loadingStatus.value.loadingItem = id
+  axios
+    .get(url)
+    .then((response) => {
+      product.value = response.data.product
+      userProductModalRef.value.openModal()
+      loadingStatus.value.loadingItem = ''
+    })
+    .catch((err) => {
+      alert(err.response.data.message)
+    })
+}
+
+// cart
+
+const addToCart = (id, qty = 1) => {
+  const url = `${apiUrl}/api/${apiPath}/cart`
+  loadingStatus.value.loadingItem = id
+  const cartData = {
+    product_id: id,
+    qty
+  }
+
+  userProductModalRef.value.hideModal()
+  axios
+    .post(url, { data: cartData })
+    .then(() => {
+      getCart()
+      SwalHandle.showSuccessMsg('已加入購物車')
+      loadingStatus.value.loadingItem = ''
+    })
+    .catch((err) => {
+      alert(err.response.data.message)
+    })
+}
+
+const updateCart = (data) => {
+  loadingStatus.value.loadingItem = data.id
+  const url = `${apiUrl}/api/${apiPath}/cart/${data.id}`
+  const cartData = {
+    product_id: data.product_id,
+    qty: data.qty
+  }
+  axios
+    .put(url, { data: cartData })
+    .then(() => {
+      SwalHandle.showSuccessMsg('已更新購物車')
+      getCart()
+      loadingStatus.value.loadingItem = ''
+    })
+    .catch((err) => {
+      alert(err.response.data.message)
+      loadingStatus.value.loadingItem = ''
+    })
+}
+
+const deleteAllCarts = () => {
+  Swal.fire({
+    title: '是否清空購物車?',
+    showDenyButton: true,
+    confirmButtonText: '確認清空',
+    denyButtonText: '再想想好了'
+  })
+    .then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        SwalHandle.showSuccessMsg('刪除成功')
+        axios
+          .delete(url)
+          .then(() => {
+            getCart()
+          })
+          .catch((err) => {
+            alert(err.response.data.message)
+          })
+      } else if (result.isDenied) {
+        SwalHandle.showErrorMsg('已為您保留購物車')
+      }
+    })
+    .catch(() => {
+      alert('伺服器錯誤')
+    })
+  const url = `${apiUrl}/api/${apiPath}/carts`
+}
+const getCart = () => {
+  const url = `${apiUrl}/api/${apiPath}/cart`
+  axios
+    .get(url)
+    .then((response) => {
+      carts.value = response.data.data
+    })
+    .catch((err) => {
+      alert(err.response.data.message)
+    })
+}
+
+const removeCartItem = (id) => {
+  Swal.fire({
+    title: '確認要刪除',
+    showDenyButton: true,
+    confirmButtonText: '確認刪除',
+    denyButtonText: '再想想好了'
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      loadingStatus.value.loadingItem = id
+      SwalHandle.showSuccessMsg('刪除成功')
+      axios
+        .delete(url)
+        .then(() => {
+          getCart()
+          loadingStatus.value.loadingItem = ''
+        })
+        .catch((err) => {
+          alert(err.response.data.message)
+        })
+    } else if (result.isDenied) {
+      SwalHandle.showErrorMsg('已為您保留該品項')
+    }
+  })
+  const url = `${apiUrl}/api/${apiPath}/cart/${id}`
+}
+
+const addCouponCode = () => {
+  const url = `${apiUrl}/api/${apiPath}/coupon`
+  const coupon = {
+    code: couponCode.value
+  }
+  axios
+    .post(url, { data: coupon })
+    .then((response) => {
+      SwalHandle.showSuccessMsg('已加入優惠券')
+      getCart()
+      loadingStatus.value.loadingItem = ''
+    })
+    .catch(() => {
+      SwalHandle.showErrorMsg('加入優惠券失敗')
+      getCart()
+      loadingStatus.value.loadingItem = ''
+    })
+}
+
+onMounted(() => {
+  getProducts()
+  getCart()
+})
+</script>
+
 <template>
   <div class="container">
     <div class="mt-4">
@@ -194,195 +379,9 @@
         v-if="carts.carts && carts.carts.length !== 0"
       >
         <router-link to="/checkOut" class="btn btn-dark"
-          >馬上去結帳</router-link
+          >現在去結帳</router-link
         >
       </div>
     </div>
   </div>
 </template>
-
-<script setup>
-import 'bootstrap/dist/css/bootstrap.min.css'
-import userProductModal from '../components/userProductModal.vue'
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
-import { SwalHandle } from '../stores/sweetAlertStore'
-import Swal from 'sweetalert2'
-import { useCartStore } from '../stores/cartStore'
-import { storeToRefs } from 'pinia'
-const { VITE_APP_URL: apiUrl, VITE_APP_PATH: apiPath } = import.meta.env
-
-const userProductModalRef = ref(null)
-const loadingStatus = ref({
-  loadingItem: ''
-})
-const products = ref([])
-const product = ref({})
-const couponCode = ref('')
-
-// const cart = ref({})
-const cartStoreFromPinia = useCartStore()
-const { carts } = storeToRefs(cartStoreFromPinia)
-// product
-const getProducts = () => {
-  const url = `${apiUrl}/api/${apiPath}/products`
-  axios
-    .get(url)
-    .then((response) => {
-      products.value = response.data.products
-    })
-    .catch((err) => {
-      alert(err.response.data.message)
-    })
-}
-
-const getProduct = (id) => {
-  const url = `${apiUrl}/api/${apiPath}/product/${id}`
-  loadingStatus.value.loadingItem = id
-  axios
-    .get(url)
-    .then((response) => {
-      loadingStatus.value.loadingItem = ''
-      product.value = response.data.product
-      userProductModalRef.value.openModal()
-    })
-    .catch((err) => {
-      alert(err.response.data.message)
-    })
-}
-
-// cart
-
-const addToCart = (id, qty = 1) => {
-  const url = `${apiUrl}/api/${apiPath}/cart`
-  loadingStatus.value.loadingItem = id
-  const cartData = {
-    product_id: id,
-    qty
-  }
-
-  userProductModalRef.value.hideModal()
-  axios
-    .post(url, { data: cartData })
-    .then(() => {
-      loadingStatus.value.loadingItem = ''
-      getCart()
-      SwalHandle.showSuccessMsg('已加入購物車')
-    })
-    .catch((err) => {
-      alert(err.response.data.message)
-    })
-}
-
-const updateCart = (data) => {
-  loadingStatus.value.loadingItem = data.id
-  const url = `${apiUrl}/api/${apiPath}/cart/${data.id}`
-  const cartData = {
-    product_id: data.product_id,
-    qty: data.qty
-  }
-  axios
-    .put(url, { data: cartData })
-    .then(() => {
-      SwalHandle.showSuccessMsg('已更新購物車')
-      loadingStatus.value.loadingItem = ''
-      getCart()
-    })
-    .catch((err) => {
-      alert(err.response.data.message)
-      loadingStatus.value.loadingItem = ''
-    })
-}
-
-const deleteAllCarts = () => {
-  Swal.fire({
-    title: '是否清空購物車?',
-    showDenyButton: true,
-    confirmButtonText: '確認清空',
-    denyButtonText: '再想想好了'
-  })
-    .then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        SwalHandle.showSuccessMsg('刪除成功')
-        axios
-          .delete(url)
-          .then(() => {
-            getCart()
-          })
-          .catch((err) => {
-            alert(err.response.data.message)
-          })
-      } else if (result.isDenied) {
-        SwalHandle.showErrorMsg('已為您保留購物車')
-      }
-    })
-    .catch(() => {
-      alert('伺服器錯誤')
-    })
-  const url = `${apiUrl}/api/${apiPath}/carts`
-}
-const getCart = () => {
-  const url = `${apiUrl}/api/${apiPath}/cart`
-  axios
-    .get(url)
-    .then((response) => {
-      carts.value = response.data.data
-    })
-    .catch((err) => {
-      alert(err.response.data.message)
-    })
-}
-
-const removeCartItem = (id) => {
-  Swal.fire({
-    title: '確認要刪除',
-    showDenyButton: true,
-    confirmButtonText: '確認刪除',
-    denyButtonText: '再想想好了'
-  }).then((result) => {
-    /* Read more about isConfirmed, isDenied below */
-    if (result.isConfirmed) {
-      loadingStatus.value.loadingItem = id
-      SwalHandle.showSuccessMsg('刪除成功')
-      axios
-        .delete(url)
-        .then(() => {
-          loadingStatus.value.loadingItem = ''
-          getCart()
-        })
-        .catch((err) => {
-          alert(err.response.data.message)
-        })
-    } else if (result.isDenied) {
-      SwalHandle.showErrorMsg('已為您保留該品項')
-    }
-  })
-  const url = `${apiUrl}/api/${apiPath}/cart/${id}`
-}
-
-const addCouponCode = () => {
-  const url = `${apiUrl}/api/${apiPath}/coupon`
-  const coupon = {
-    code: couponCode.value
-  }
-  loadingStatus.value.loadingItem = ''
-  axios
-    .post(url, { data: coupon })
-    .then((response) => {
-      SwalHandle.showSuccessMsg('已加入優惠券')
-      getCart()
-      loadingStatus.value.loadingItem = ''
-    })
-    .catch(() => {
-      loadingStatus.value.loadingItem = ''
-      SwalHandle.showErrorMsg('加入優惠券失敗')
-      getCart()
-    })
-}
-
-onMounted(() => {
-  getProducts()
-  getCart()
-})
-</script>

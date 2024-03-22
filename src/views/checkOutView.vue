@@ -1,3 +1,61 @@
+<script setup>
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
+import { SwalHandle } from '@/stores/sweetAlertStore'
+
+const router = useRouter()
+const cart = ref({})
+const { VITE_APP_URL: apiUrl, VITE_APP_PATH: apiPath } = import.meta.env
+const formRef = ref(null)
+const form = ref({
+  user: {
+    name: '',
+    email: '',
+    tel: '',
+    address: ''
+  },
+  message: ''
+})
+
+const createOrder = () => {
+  if (cart.value.carts.length === 0) {
+    alert('購物車內沒有品項')
+  } else {
+    const url = `${apiUrl}/api/${apiPath}/order`
+    const order = form.value
+    axios
+      .post(url, { data: order })
+      .then((response) => {
+        SwalHandle.showSuccessMsg('結帳成功!')
+        formRef.value.resetForm()
+        getCart()
+        router.push('/checkOutSuccess')
+      })
+      .catch((err) => {
+        alert(err.response.data.message)
+      })
+  }
+}
+
+const getCart = () => {
+  const url = `${apiUrl}/api/${apiPath}/cart`
+  axios
+    .get(url)
+    .then((response) => {
+      cart.value = response.data.data
+    })
+    .catch((err) => {
+      alert(err.response.data.message)
+    })
+}
+
+onMounted(() => {
+  window.scrollTo(0, 0)
+  getCart()
+})
+</script>
+
 <template>
   <div class="container">
     <div class="row justify-content-center">
@@ -15,7 +73,7 @@
           >
             <img
               :src="cartItem.product.imageUrl"
-              alt=""
+              :alt="`${cartItem.product.title}的圖片`"
               class="me-2"
               style="width: 48px; height: 48px; object-fit: cover"
             />
@@ -138,7 +196,7 @@
           <router-link to="/cart" class="text-dark mt-md-0 mt-3"
             ><i class="fas fa-chevron-left me-2"></i>回到購物車</router-link
           >
-          <button type="submit" class="btn btn-danger" @click="createOrder">
+          <button type="button" class="btn btn-danger" @click="createOrder">
             送出訂單
           </button>
         </div>
@@ -146,61 +204,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { onMounted, ref } from 'vue'
-import axios from 'axios'
-import { useRouter } from 'vue-router'
-import { SwalHandle } from '../stores/sweetAlertStore'
-
-const router = useRouter()
-const cart = ref({})
-const { VITE_APP_URL: apiUrl, VITE_APP_PATH: apiPath } = import.meta.env
-const formRef = ref(null)
-const form = ref({
-  user: {
-    name: '',
-    email: '',
-    tel: '',
-    address: ''
-  },
-  message: ''
-})
-
-const createOrder = () => {
-  if (cart.value.carts.length === 0) {
-    alert('購物車內沒有品項')
-  } else {
-    const url = `${apiUrl}/api/${apiPath}/order`
-    const order = form.value
-    axios
-      .post(url, { data: order })
-      .then((response) => {
-        SwalHandle.showSuccessMsg('結帳成功!')
-        formRef.value.resetForm()
-        getCart()
-        router.push('/checkOutSuccess')
-      })
-      .catch((err) => {
-        alert(err.response.data.message)
-      })
-  }
-}
-
-const getCart = () => {
-  const url = `${apiUrl}/api/${apiPath}/cart`
-  axios
-    .get(url)
-    .then((response) => {
-      cart.value = response.data.data
-    })
-    .catch((err) => {
-      alert(err.response.data.message)
-    })
-}
-
-onMounted(() => {
-  window.scrollTo(0, 0)
-  getCart()
-})
-</script>

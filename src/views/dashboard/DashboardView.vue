@@ -1,21 +1,9 @@
-<template>
-  <h2>後台</h2>
-  <nav>
-    <RouterLink to="/">回到前台</RouterLink> |
-    <RouterLink to="/admin/order">訂單頁面</RouterLink> |
-    <RouterLink to="/admin/backProducts">產品管理頁面</RouterLink> |
-    <RouterLink to="/admin/AdminCoupons">優惠券管理頁面</RouterLink> |
-    <a href="#" @click.prevent="logOut">登出</a>
-  </nav>
-  <RouterView />
-</template>
-
 <script setup>
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import '../../assets/main.css'
+import '@/assets/main.css'
 const Toast = Swal.mixin({
   toast: true,
   position: 'center',
@@ -71,3 +59,15 @@ onMounted(() => {
   checkLogin()
 })
 </script>
+
+<template>
+  <h2>後台</h2>
+  <nav>
+    <RouterLink to="/">回到前台</RouterLink> |
+    <RouterLink to="/admin/order">訂單頁面</RouterLink> |
+    <RouterLink to="/admin/backProducts">產品管理頁面</RouterLink> |
+    <RouterLink to="/admin/AdminCoupons">優惠券管理頁面</RouterLink> |
+    <a href="#" @click.prevent="logOut">登出</a>
+  </nav>
+  <RouterView />
+</template>

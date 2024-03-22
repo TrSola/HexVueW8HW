@@ -1,3 +1,30 @@
+<script setup>
+import axios from 'axios'
+
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const user = ref({
+  username: '',
+  password: ''
+})
+const { VITE_APP_URL } = import.meta.env
+
+const login = () => {
+  const apiUrl = `${VITE_APP_URL}/admin/signin`
+  axios
+    .post(apiUrl, user.value)
+    .then((res) => {
+      const { expired, token } = res.data
+      document.cookie = `WillyToken=${token};expires=${new Date(expired)};`
+      router.push('/admin')
+    })
+    .catch((err) => alert(err.response.data.message))
+}
+</script>
+
 <template>
   <div class="container">
     <div class="row justify-content-center">
@@ -39,30 +66,3 @@
     <p class="mt-5 text-muted">© 2023~2123 - Willy</p>
   </div>
 </template>
-
-<script setup>
-import axios from 'axios'
-
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-
-const user = ref({
-  username: '',
-  password: ''
-})
-const { VITE_APP_URL } = import.meta.env
-
-const login = () => {
-  const apiUrl = `${VITE_APP_URL}/admin/signin`
-  axios
-    .post(apiUrl, user.value)
-    .then((res) => {
-      const { expired, token } = res.data
-      document.cookie = `WillyToken=${token};expires=${new Date(expired)};`
-      router.push('/admin')
-    })
-    .catch((err) => alert(err.response.data.message))
-}
-</script>

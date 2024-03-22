@@ -1,3 +1,5 @@
+<script></script>
+
 <template>
   <div class="position-relative d-flex">
     <div class="container d-flex flex-column" style="min-height: 100vh">
@@ -29,8 +31,6 @@
     ></div>
   </div>
 </template>
-
-<script></script>
 
 <style>
 body {

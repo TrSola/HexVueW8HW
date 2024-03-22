@@ -2,12 +2,12 @@
 import axios from 'axios'
 
 import Swal from 'sweetalert2'
-import '../../assets/main.css'
+import '@/assets/main.css'
 import { ref } from 'vue'
 
 import CouponModal from '@/components/CouponModal.vue'
 import DelModal from '@/components/DelModal.vue'
-import PaginationComponent from '../../components/PaginationComponent.vue'
+import PaginationComponent from '@/components/PaginationComponent.vue'
 
 const Toast = Swal.mixin({
   toast: true,

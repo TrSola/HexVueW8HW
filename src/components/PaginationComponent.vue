@@ -1,5 +1,4 @@
 <script setup>
-// eslint-disable-next-line no-unused-vars
 const props = defineProps({
   pages: Object
 })
@@ -14,23 +13,23 @@ const updatePage = (page) => {
 <template>
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
-      <li :class="{ disabled: !pages.has_pre }" class="page-item">
+      <li :class="{ disabled: !props.pages.has_pre }" class="page-item">
         <a
           class="page-link"
           href="#"
           aria-label="Previous"
-          @click.prevent="updatePage(pages.current_page - 1)"
+          @click.prevent="updatePage(props.pages.current_page - 1)"
         >
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
       <li
         class="page-item"
-        v-for="page in pages.total_pages"
+        v-for="page in props.pages.total_pages"
         :key="page"
-        :class="{ active: pages.current_page === page }"
+        :class="{ active: props.pages.current_page === page }"
       >
-        <span class="page-link" v-if="page === pages.current_page">{{
+        <span class="page-link" v-if="page === props.pages.current_page">{{
           page
         }}</span>
         <a
@@ -41,12 +40,12 @@ const updatePage = (page) => {
           >{{ page }}</a
         >
       </li>
-      <li class="page-item" :class="{ disabled: !pages.has_next }">
+      <li class="page-item" :class="{ disabled: !props.pages.has_next }">
         <a
           class="page-link"
           href="#"
           aria-label="Next"
-          @click.prevent="updatePage(pages.current_page + 1)"
+          @click.prevent="updatePage(props.pages.current_page + 1)"
         >
           <span aria-hidden="true">&raquo;</span>
         </a>

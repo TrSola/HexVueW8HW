@@ -1,3 +1,20 @@
+<script setup>
+import useModal from '@/hooks/useModal'
+import { ref } from 'vue'
+const { openModal, hideModal, modalRef } = useModal()
+const props = defineProps(['product'])
+const emit = defineEmits(['add-to-cart'])
+const qty = ref(1)
+const addToCart = () => {
+  emit('add-to-cart', props.product.id, qty.value)
+  qty.value = 1
+}
+defineExpose({
+  openModal,
+  hideModal
+})
+</script>
+
 <template>
   <div
     class="modal fade"
@@ -78,20 +95,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import useModal from '@/hooks/useModal'
-import { defineProps, defineEmits, ref } from 'vue'
-const { openModal, hideModal, modalRef } = useModal()
-const props = defineProps(['product'])
-const emit = defineEmits(['add-to-cart'])
-const qty = ref(1)
-const addToCart = () => {
-  emit('add-to-cart', props.product.id, qty.value)
-  qty.value = 1
-}
-defineExpose({
-  openModal,
-  hideModal
-})
-</script>

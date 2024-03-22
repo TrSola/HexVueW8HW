@@ -11,11 +11,6 @@ const routes = [
         component: () => import('../views/HomeView.vue')
       },
       {
-        path: 'about',
-        name: '關於我們頁面',
-        component: () => import('../views/AboutView.vue')
-      },
-      {
         path: 'products',
         name: '產品頁面',
         component: () => import('../views/ProductsView.vue')
@@ -23,24 +18,24 @@ const routes = [
       {
         path: 'product/:id',
         name: '單一產品頁面',
-        component: () => import('../views/productView.vue')
+        component: () => import('../views/ProductView.vue')
       },
       {
         path: 'cart',
         name: '購物車頁面',
         component: () => import('../views/CartView.vue')
+      },
+      {
+        path: '/checkOut',
+        name: '結帳頁面',
+        component: () => import('../views/CheckOutView.vue')
+      },
+      {
+        path: '/checkOutSuccess',
+        name: '結帳成功頁面',
+        component: () => import('../views/CheckOutSuccess.vue')
       }
     ]
-  },
-  {
-    path: '/checkOut',
-    name: '結帳頁面',
-    component: () => import('../views/checkOutView.vue')
-  },
-  {
-    path: '/checkOutSuccess',
-    name: '結帳成功頁面',
-    component: () => import('../views/checkOutSuccess.vue')
   },
   {
     path: '/login',

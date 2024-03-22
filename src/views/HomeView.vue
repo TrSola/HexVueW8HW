@@ -1,3 +1,48 @@
+<script setup>
+import '@/assets/all.css'
+import axios from 'axios'
+import { ref, onMounted } from 'vue'
+
+const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env
+const animalProducts = ref([])
+const pagination = ref({})
+const foodProducts = ref({})
+
+const getAnimalData = (page = 1) => {
+  axios
+    .get(
+      `${VITE_APP_URL}/api/${VITE_APP_PATH}/products?category=動物&page=${page}`
+    )
+    .then((res) => {
+      animalProducts.value = res.data.products
+      pagination.value = res.data.pagination
+    })
+    .catch((err) => alert(err.response.data.message))
+}
+
+const getFoodData = (page = 1) => {
+  axios
+    .get(
+      `${VITE_APP_URL}/api/${VITE_APP_PATH}/products?category=食物&page=${page}`
+    )
+    .then((res) => {
+      foodProducts.value = res.data.products
+      pagination.value = res.data.pagination
+    })
+    .catch((err) => alert(err.response.data.message))
+}
+
+onMounted(() => {
+  // const token = document.cookie.replace(
+  //   /(?:(?:^|.*;\s*)WillyToken\s*=\s*([^;]*).*$)|^.*$/,
+  //   '$1'
+  // )
+  // axios.defaults.headers.common.Authorization = token
+  getAnimalData()
+  getFoodData()
+})
+</script>
+
 <template>
   <div class="position-relative">
     <div
@@ -38,7 +83,7 @@
               :src="animalProducts[0].imageUrl"
               class="card-img-top rounded-0 object-fit-cover"
               style="height: 350px"
-              alt="產品圖片1"
+              alt="動物圖片1"
             />
             <div class="card-body text-center">
               <h4>{{ animalProducts[0].title }}</h4>
@@ -58,7 +103,7 @@
               :src="animalProducts[1].imageUrl"
               class="card-img-top rounded-0 object-fit-cover"
               style="height: 350px"
-              alt="產品圖片1"
+              alt="動物圖片2"
             />
             <div class="card-body text-center">
               <h4>{{ animalProducts[1].title }}</h4>
@@ -78,7 +123,7 @@
               :src="animalProducts[2].imageUrl"
               class="card-img-top rounded-0 object-fit-cover"
               style="height: 350px"
-              alt="產品圖片1"
+              alt="動物圖片3"
             />
             <div class="card-body text-center">
               <h4>{{ animalProducts[2].title }}</h4>
@@ -152,7 +197,7 @@
         <div class="col-md-6">
           <img
             :src="foodProducts[0].imageUrl"
-            alt=""
+            alt="食物圖片1"
             class="img-fluid object-fit-cover"
             style="height: 450px; width: 100%"
           />
@@ -168,7 +213,7 @@
         <div class="col-md-6">
           <img
             :src="foodProducts[1].imageUrl"
-            alt=""
+            alt="食物圖片2"
             class="img-fluid object-fit-cover"
             style="height: 450px; width: 100%"
           />
@@ -181,48 +226,3 @@
     </RouterLink>
   </div>
 </template>
-
-<script setup>
-import '../assets/all.css'
-import axios from 'axios'
-import { ref, onMounted } from 'vue'
-
-const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env
-const animalProducts = ref([])
-const pagination = ref({})
-const foodProducts = ref({})
-
-const getAnimalData = (page = 1) => {
-  axios
-    .get(
-      `${VITE_APP_URL}/api/${VITE_APP_PATH}/products?category=動物&page=${page}`
-    )
-    .then((res) => {
-      animalProducts.value = res.data.products
-      pagination.value = res.data.pagination
-    })
-    .catch((err) => alert(err.response.data.message))
-}
-
-const getFoodData = (page = 1) => {
-  axios
-    .get(
-      `${VITE_APP_URL}/api/${VITE_APP_PATH}/products?category=食物&page=${page}`
-    )
-    .then((res) => {
-      foodProducts.value = res.data.products
-      pagination.value = res.data.pagination
-    })
-    .catch((err) => alert(err.response.data.message))
-}
-
-onMounted(() => {
-  // const token = document.cookie.replace(
-  //   /(?:(?:^|.*;\s*)WillyToken\s*=\s*([^;]*).*$)|^.*$/,
-  //   '$1'
-  // )
-  // axios.defaults.headers.common.Authorization = token
-  getAnimalData()
-  getFoodData()
-})
-</script>

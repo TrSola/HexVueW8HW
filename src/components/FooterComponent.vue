@@ -1,28 +1,12 @@
+<script></script>
+
 <template>
-  <div class="bg-light py-4">
-    <div class="container">
-      <div
-        class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start"
-      >
-        <p class="mb-0 fw-bold">再看看有沒有自己喜歡的商品吧！</p>
-        <!-- <p class="mb-0 fw-bold">試試搜尋自己喜歡的商品吧</p>
-          <div class="input-group w-md-50 mt-md-0 mt-3">
-            <input type="text" class="form-control rounded-0" placeholder="" />
-            <div class="input-group-append">
-              <button class="btn btn-dark rounded-0" type="button" id="search">
-               搜尋
-              </button>
-            </div>
-          </div> -->
-      </div>
-    </div>
-  </div>
   <div class="bg-dark py-5">
     <div class="container">
       <div
         class="d-flex align-items-center justify-content-between text-white mb-md-7 mb-4"
       >
-        <a class="text-white h4" href="./index.html">SOUXI</a>
+        <a class="text-white h4" href="/">SOUXI</a>
         <ul class="d-flex list-unstyled mb-0 h4">
           <li>
             <a href="#" class="text-white mx-3"

@@ -1,3 +1,90 @@
+<script setup>
+import useModal from '@/hooks/useModal'
+import { watch, ref } from 'vue'
+import axios from 'axios'
+import Swal from 'sweetalert2'
+import '../assets/main.css'
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'center',
+  iconColor: 'white',
+  customClass: {
+    popup: 'colored-toast'
+  },
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true
+})
+
+const tempProductInProductModal = ref({})
+const props = defineProps(['status', 'tempProduct'])
+const emit = defineEmits(['confirm-update'])
+
+const { openModal, hideModal, modalRef } = useModal()
+
+const fileInputRef = ref(null)
+const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env
+const fileStatus = ref({
+  fileUploading: false
+})
+
+const createImages = () => {
+  tempProductInProductModal.value.imagesUrl = []
+  tempProductInProductModal.value.imagesUrl.push('')
+}
+
+watch(
+  () => props.tempProduct,
+  (value) => {
+    tempProductInProductModal.value = value
+    if (!tempProductInProductModal.value.imagesUrl) {
+      tempProductInProductModal.value.imagesUrl = []
+    }
+    if (!tempProductInProductModal.value.imageUrl) {
+      tempProductInProductModal.value.imageUrl = ''
+    }
+  }
+)
+
+const uploadFile = () => {
+  const uploadedFile = fileInputRef.value.files[0]
+  const formData = new FormData()
+  formData.append('file-to-upload', uploadedFile)
+
+  const url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/upload`
+  fileStatus.value.fileUploading = true
+
+  axios
+    .post(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then((response) => {
+      fileStatus.value.fileUploading = false
+      tempProductInProductModal.value.imageUrl = response.data.imageUrl
+      fileInputRef.value.value = ''
+      Toast.fire({
+        icon: 'success',
+        title: '圖片上傳成功'
+      })
+    })
+    .catch((error) => {
+      fileStatus.value.fileUploading = false
+      Toast.fire({
+        icon: 'error',
+        title: error.response.data.message
+      })
+    })
+}
+
+defineExpose({
+  openModal,
+  hideModal
+})
+</script>
+
 <template>
   <div>
     <div>
@@ -97,6 +184,7 @@
                       <button
                         class="btn btn-outline-primary btn-sm d-block w-100"
                         @click="tempProductInProductModal.imagesUrl.push('')"
+                        type="button"
                       >
                         新增圖片
                       </button>
@@ -105,6 +193,7 @@
                       <button
                         class="btn btn-outline-danger btn-sm d-block w-100"
                         @click="tempProductInProductModal.imagesUrl.pop()"
+                        type="button"
                       >
                         刪除圖片
                       </button>
@@ -115,6 +204,7 @@
                       <button
                         class="btn btn-outline-primary btn-sm d-block w-100"
                         @click="createImages"
+                        type="button"
                       >
                         新增圖片
                       </button>
@@ -243,90 +333,3 @@
     `,
   </div>
 </template>
-
-<script setup>
-import useModal from '@/hooks/useModal'
-import { watch, ref } from 'vue'
-import axios from 'axios'
-import Swal from 'sweetalert2'
-import '../assets/main.css'
-
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'center',
-  iconColor: 'white',
-  customClass: {
-    popup: 'colored-toast'
-  },
-  showConfirmButton: false,
-  timer: 1500,
-  timerProgressBar: true
-})
-
-const tempProductInProductModal = ref({})
-const props = defineProps(['status', 'tempProduct'])
-const emit = defineEmits(['confirm-update'])
-
-const { openModal, hideModal, modalRef } = useModal()
-
-const fileInputRef = ref(null)
-const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env
-const fileStatus = ref({
-  fileUploading: false
-})
-
-const createImages = () => {
-  tempProductInProductModal.value.imagesUrl = []
-  tempProductInProductModal.value.imagesUrl.push('')
-}
-
-watch(
-  () => props.tempProduct,
-  (value) => {
-    tempProductInProductModal.value = value
-    if (!tempProductInProductModal.value.imagesUrl) {
-      tempProductInProductModal.value.imagesUrl = []
-    }
-    if (!tempProductInProductModal.value.imageUrl) {
-      tempProductInProductModal.value.imageUrl = ''
-    }
-  }
-)
-
-const uploadFile = () => {
-  const uploadedFile = fileInputRef.value.files[0]
-  const formData = new FormData()
-  formData.append('file-to-upload', uploadedFile)
-
-  const url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/upload`
-  fileStatus.value.fileUploading = true
-
-  axios
-    .post(url, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-    .then((response) => {
-      fileStatus.value.fileUploading = false
-      tempProductInProductModal.value.imageUrl = response.data.imageUrl
-      fileInputRef.value.value = ''
-      Toast.fire({
-        icon: 'success',
-        title: '圖片上傳成功'
-      })
-    })
-    .catch((error) => {
-      fileStatus.value.fileUploading = false
-      Toast.fire({
-        icon: 'error',
-        title: error.response.data.message
-      })
-    })
-}
-
-defineExpose({
-  openModal,
-  hideModal
-})
-</script>

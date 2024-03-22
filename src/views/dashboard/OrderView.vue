@@ -7,7 +7,7 @@ import DelModal from '@/components/DelModal.vue'
 import OrderModal from '@/components/OrderModal.vue'
 import PaginationComponent from '@/components/PaginationComponent.vue'
 import Swal from 'sweetalert2'
-import '../../assets/main.css'
+import '@/assets/main.css'
 
 const Toast = Swal.mixin({
   toast: true,
@@ -44,11 +44,11 @@ const getOrders = (currentPage = 1) => {
       isLoading.value = false
     })
     .catch(() => {
-      isLoading.value = false
       Toast.fire({
         icon: 'warning',
         title: '取得訂單失敗'
       })
+      isLoading.value = false
     })
 }
 
