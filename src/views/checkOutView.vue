@@ -17,6 +17,7 @@ const form = ref({
   },
   message: ''
 })
+const isLoading = ref(false)
 
 const createOrder = () => {
   if (cart.value.carts.length === 0) {
@@ -39,6 +40,7 @@ const createOrder = () => {
 }
 
 const getCart = () => {
+  isLoading.value = true
   const url = `${apiUrl}/api/${apiPath}/cart`
   axios
     .get(url)
@@ -47,6 +49,9 @@ const getCart = () => {
     })
     .catch((err) => {
       alert(err.response.data.message)
+    })
+    .finally(() => {
+      isLoading.value = false
     })
 }
 
@@ -57,6 +62,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <VueLoading :active="isLoading" :z-index="1060" />
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-10">

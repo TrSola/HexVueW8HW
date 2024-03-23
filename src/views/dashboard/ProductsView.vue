@@ -5,6 +5,8 @@ import { ref } from 'vue'
 import ProductModal from '@/components/ProductModal.vue'
 import DelProductModal from '@/components/DelProductModal.vue'
 import PaginationComponent from '@/components/PaginationComponent.vue'
+import { SwalHandle } from '@/stores/sweetAlertStore'
+
 const productModal2 = ref(null)
 const delProductModal2 = ref(null)
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env
@@ -26,8 +28,11 @@ const getData = (page = 1) => {
     .then((res) => {
       productList.value = res.data.products
       pagination.value = res.data.pagination
+      SwalHandle.showSuccessMsg('已取得產品資料')
     })
-    .catch((err) => alert(err.response.data.message))
+    .catch((err) => {
+      SwalHandle.showErrorMsg(err.response.data.message)
+    })
     .finally(() => {
       isLoading.value = false
     })
@@ -55,22 +60,26 @@ const confirmUpdate = () => {
     axios
       .post(`${apiAdmin}/product`, { data: tempProduct.value })
       .then((res) => {
-        alert(res.data.message)
+        SwalHandle.showSuccessMsg('已新增產品資料')
         productModal2.value.hideModal()
         getData()
       })
-      .catch((err) => alert(err))
+      .catch((err) => {
+        SwalHandle.showErrorMsg(err.response.data.message)
+      })
   } else if (status.value === 'edit') {
     axios
       .put(`${apiAdmin}/product/${tempProduct.value.id}`, {
         data: tempProduct.value
       })
       .then((res) => {
-        alert(res.data.message)
+        SwalHandle.showSuccessMsg('已更新產品資料')
         productModal2.value.hideModal()
         getData()
       })
-      .catch((err) => alert(err.response.data.message))
+      .catch((err) => {
+        SwalHandle.showErrorMsg(err.response.data.message)
+      })
   }
 }
 
@@ -78,11 +87,13 @@ const confirmDelete = () => {
   axios
     .delete(`${apiAdmin}/product/${tempProduct.value.id}`)
     .then((res) => {
-      alert(res.data.message)
+      SwalHandle.showSuccessMsg('已刪除產品資料')
       delProductModal2.value.hideModal()
       getData()
     })
-    .catch((err) => alert(err))
+    .catch((err) => {
+      SwalHandle.showErrorMsg(err.response.data.message)
+    })
 }
 
 getData()

@@ -133,7 +133,7 @@ watch(
                 <img
                   :src="product.imageUrl"
                   class="card-img-top rounded-0 object-fit-cover"
-                  :alt="`${product.title}的圖片`"
+                  alt="商品圖片"
                   height="500"
                 />
                 <a href="#" class="text-dark">

@@ -1,25 +1,13 @@
 <script setup>
 import axios from 'axios'
 
-import Swal from 'sweetalert2'
 import '@/assets/main.css'
 import { ref } from 'vue'
 
 import CouponModal from '@/components/CouponModal.vue'
 import DelModal from '@/components/DelModal.vue'
 import PaginationComponent from '@/components/PaginationComponent.vue'
-
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'center',
-  iconColor: 'white',
-  customClass: {
-    popup: 'colored-toast'
-  },
-  showConfirmButton: false,
-  timer: 1500,
-  timerProgressBar: true
-})
+import { SwalHandle } from '@/stores/sweetAlertStore'
 
 const couponModalRef = ref(null)
 const delModalRef = ref(null)
@@ -61,12 +49,10 @@ const getCoupons = (page = 1) => {
     .then((response) => {
       coupons.value = response.data.coupons
       pagination.value = response.data.pagination
+      SwalHandle.showSuccessMsg('已取得優惠券資料')
     })
-    .catch((error) => {
-      Toast.fire({
-        icon: 'warning',
-        title: error.response.data.message
-      })
+    .catch((err) => {
+      SwalHandle.showErrorMsg(err.response.data.message)
     })
     .finally(() => {
       isLoading.value = false
@@ -76,31 +62,29 @@ const getCoupons = (page = 1) => {
 const updateCoupon = (tempCoupon) => {
   isLoading.value = true
   let url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/coupon`
-  let httpMethos = 'post'
+  let httpMethods = 'post'
   let data = tempCoupon
 
   if (!isNew.value) {
     url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/coupon/${tempCoupon.id}`
-    httpMethos = 'put'
+    httpMethods = 'put'
     data = tempCoupon
   }
 
-  axios[httpMethos](url, { data })
-    .then((response) => {
+  axios[httpMethods](url, { data })
+    .then(() => {
       isLoading.value = false
-      Toast.fire({
-        icon: 'success',
-        title: '新增優惠券成功'
-      })
       getCoupons()
       couponModalRef.value.hideModal()
+      if (httpMethods === 'post') {
+        SwalHandle.showSuccessMsg('已新增優惠券資料')
+      } else if (httpMethods === 'put') {
+        SwalHandle.showSuccessMsg('已更新優惠券資料')
+      }
     })
-    .catch((error) => {
+    .catch((err) => {
       isLoading.value = false
-      Toast.fire({
-        icon: 'warning',
-        title: error.response.data.message
-      })
+      SwalHandle.showErrorMsg(err.response.data.message)
     })
 }
 
@@ -109,22 +93,16 @@ const delCoupon = () => {
   isLoading.value = true
   axios
     .delete(url)
-    .then((response) => {
+    .then(() => {
       isLoading.value = false
-      Toast.fire({
-        icon: 'success',
-        title: '刪除優惠券成功'
-      })
+      SwalHandle.showSuccessMsg('已刪除優惠券資料')
       const delComponent = delModalRef.value
       delComponent.hideModal()
       getCoupons()
     })
-    .catch((error) => {
+    .catch((err) => {
       isLoading.value = false
-      Toast.fire({
-        icon: 'warning',
-        title: error.response.data.message
-      })
+      SwalHandle.showErrorMsg(err.response.data.message)
     })
 }
 

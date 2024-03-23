@@ -6,20 +6,8 @@ import { ref } from 'vue'
 import DelModal from '@/components/DelModal.vue'
 import OrderModal from '@/components/OrderModal.vue'
 import PaginationComponent from '@/components/PaginationComponent.vue'
-import Swal from 'sweetalert2'
 import '@/assets/main.css'
-
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'center',
-  iconColor: 'white',
-  customClass: {
-    popup: 'colored-toast'
-  },
-  showConfirmButton: false,
-  timer: 1500,
-  timerProgressBar: true
-})
+import { SwalHandle } from '@/stores/sweetAlertStore'
 
 const orderModalRef = ref(null)
 const delModalRef = ref(null)
@@ -41,12 +29,10 @@ const getOrders = (currentPage = 1) => {
     .then((response) => {
       orders.value = response.data.orders
       pagination.value = response.data.pagination
+      SwalHandle.showSuccessMsg('已取得訂單資料')
     })
-    .catch(() => {
-      Toast.fire({
-        icon: 'warning',
-        title: '取得訂單失敗'
-      })
+    .catch((err) => {
+      SwalHandle.showErrorMsg(err.response.data.message)
     })
     .finally(() => {
       isLoading.value = false
@@ -76,17 +62,11 @@ const updatePaid = (item) => {
       isLoading.value = false
       orderModalRef.value.hideModal()
       getOrders(currentPage.value)
-      Toast.fire({
-        icon: 'success',
-        title: '修改付款狀態成功'
-      })
+      SwalHandle.showSuccessMsg('修改付款狀態成功')
     })
-    .catch((error) => {
+    .catch((err) => {
       isLoading.value = false
-      Toast.fire({
-        icon: 'warning',
-        title: error.response.data.message
-      })
+      SwalHandle.showErrorMsg(err.response.data.message)
     })
 }
 
@@ -99,17 +79,11 @@ const delOrder = () => {
       isLoading.value = false
       delModalRef.value.hideModal()
       getOrders(currentPage.value)
-      Toast.fire({
-        icon: 'success',
-        title: '刪除訂單成功'
-      })
+      SwalHandle.showSuccessMsg('刪除訂單成功')
     })
-    .catch((error) => {
+    .catch((err) => {
       isLoading.value = false
-      Toast.fire({
-        icon: 'warning',
-        title: error.response.data.message
-      })
+      SwalHandle.showErrorMsg(err.response.data.message)
     })
 }
 

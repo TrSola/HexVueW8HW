@@ -55,12 +55,12 @@ const routes = [
       {
         path: 'backProducts',
         name: '產品管理頁面',
-        component: () => import('../views/dashboard/BackProductsView.vue')
+        component: () => import('../views/dashboard/ProductsView.vue')
       },
       {
         path: 'AdminCoupons',
         name: '優惠券管理頁面',
-        component: () => import('../views/dashboard/AdminCoupons.vue')
+        component: () => import('../views/dashboard/CouponsView.vue')
       }
     ]
   },
