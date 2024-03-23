@@ -26,9 +26,11 @@ const getData = (page = 1) => {
     .then((res) => {
       productList.value = res.data.products
       pagination.value = res.data.pagination
-      isLoading.value = false
     })
     .catch((err) => alert(err.response.data.message))
+    .finally(() => {
+      isLoading.value = false
+    })
 }
 
 const openModal = (arg, product) => {
@@ -87,6 +89,7 @@ getData()
 </script>
 
 <template>
+  <VueLoading :active="isLoading" :z-index="1060" />
   <div>
     <div class="container">
       <div class="text-end mt-4">

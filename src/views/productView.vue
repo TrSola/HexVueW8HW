@@ -15,6 +15,7 @@ const pagination = ref({})
 const cartStoreFromPinia = useCartStore()
 const { addToCart } = cartStoreFromPinia
 const router = useRouter()
+const isLoading = ref(false)
 
 router.afterEach(() => {
   setTimeout(() => {
@@ -38,6 +39,7 @@ const getProduct = () => {
 }
 
 const getData = (page = 1) => {
+  isLoading.value = true
   const { category = '' } = route.query
   axios
     .get(`${apiUrl}/api/${apiPath}/products?category=${category}&page=${page}`)
@@ -46,6 +48,9 @@ const getData = (page = 1) => {
       pagination.value = res.data.pagination
     })
     .catch((err) => alert(err.response.data.message))
+    .finally(() => {
+      isLoading.value = false
+    })
 }
 
 const filteredProducts = computed(() => {
@@ -94,6 +99,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <VueLoading :active="isLoading" :z-index="1060" />
   <div class="container">
     <div class="row align-items-center">
       <div class="col-md-7">
@@ -123,6 +129,7 @@ onMounted(() => {
             href="#carouselExampleControls"
             role="button"
             data-slide="prev"
+            @click="navigateToPreviousProduct"
           >
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>

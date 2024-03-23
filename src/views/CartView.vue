@@ -1,6 +1,5 @@
 <script setup>
 import 'bootstrap/dist/css/bootstrap.min.css'
-import userProductModal from '@/components/UserProductModal.vue'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { SwalHandle } from '@/stores/sweetAlertStore'
@@ -9,67 +8,15 @@ import { useCartStore } from '@/stores/cartStore'
 import { storeToRefs } from 'pinia'
 const { VITE_APP_URL: apiUrl, VITE_APP_PATH: apiPath } = import.meta.env
 
-const userProductModalRef = ref(null)
 const loadingStatus = ref({
   loadingItem: ''
 })
-const products = ref([])
-const product = ref({})
 const couponCode = ref('')
+const isLoading = ref(false)
 
-// const cart = ref({})
 const cartStoreFromPinia = useCartStore()
 const { carts } = storeToRefs(cartStoreFromPinia)
 // product
-const getProducts = () => {
-  const url = `${apiUrl}/api/${apiPath}/products`
-  axios
-    .get(url)
-    .then((response) => {
-      products.value = response.data.products
-    })
-    .catch((err) => {
-      alert(err.response.data.message)
-    })
-}
-
-const getProduct = (id) => {
-  const url = `${apiUrl}/api/${apiPath}/product/${id}`
-  loadingStatus.value.loadingItem = id
-  axios
-    .get(url)
-    .then((response) => {
-      product.value = response.data.product
-      userProductModalRef.value.openModal()
-      loadingStatus.value.loadingItem = ''
-    })
-    .catch((err) => {
-      alert(err.response.data.message)
-    })
-}
-
-// cart
-
-const addToCart = (id, qty = 1) => {
-  const url = `${apiUrl}/api/${apiPath}/cart`
-  loadingStatus.value.loadingItem = id
-  const cartData = {
-    product_id: id,
-    qty
-  }
-
-  userProductModalRef.value.hideModal()
-  axios
-    .post(url, { data: cartData })
-    .then(() => {
-      getCart()
-      SwalHandle.showSuccessMsg('已加入購物車')
-      loadingStatus.value.loadingItem = ''
-    })
-    .catch((err) => {
-      alert(err.response.data.message)
-    })
-}
 
 const updateCart = (data) => {
   loadingStatus.value.loadingItem = data.id
@@ -120,6 +67,7 @@ const deleteAllCarts = () => {
   const url = `${apiUrl}/api/${apiPath}/carts`
 }
 const getCart = () => {
+  isLoading.value = true
   const url = `${apiUrl}/api/${apiPath}/cart`
   axios
     .get(url)
@@ -128,6 +76,9 @@ const getCart = () => {
     })
     .catch((err) => {
       alert(err.response.data.message)
+    })
+    .finally(() => {
+      isLoading.value = false
     })
 }
 
@@ -178,88 +129,14 @@ const addCouponCode = () => {
 }
 
 onMounted(() => {
-  getProducts()
   getCart()
 })
 </script>
 
 <template>
+  <VueLoading :active="isLoading" :z-index="1060" />
   <div class="container">
     <div class="mt-4">
-      <!-- 產品列表 -->
-      <user-product-modal
-        ref="userProductModalRef"
-        :product="product"
-        @add-to-cart="addToCart"
-      ></user-product-modal>
-      <table class="table align-middle">
-        <thead>
-          <tr>
-            <th>圖片</th>
-            <th>商品名稱</th>
-            <th>價格</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in products" :key="item.id">
-            <td style="width: 200px">
-              <div
-                style="
-                  height: 100px;
-                  background-size: cover;
-                  background-position: center;
-                "
-                :style="{ backgroundImage: `url(${item.imageUrl})` }"
-              ></div>
-            </td>
-            <td>{{ item.title }}</td>
-            <td>
-              <div class="h5" v-if="!item.price">
-                {{ item.origin_price }} 元
-              </div>
-              <del class="h6" v-if="item.price"
-                >原價 {{ item.origin_price }} 元</del
-              >
-              <div class="h5" v-if="item.price">
-                現在只要 {{ item.price }} 元
-              </div>
-            </td>
-            <td>
-              <div class="btn-group btn-group-sm">
-                <button
-                  type="button"
-                  class="btn btn-outline-secondary"
-                  @click="getProduct(item.id)"
-                  :disabled="
-                    loadingStatus.loadingItem === item.id || !item.is_enabled
-                  "
-                >
-                  <i
-                    class="fas fa-spinner fa-pulse"
-                    v-if="loadingStatus.loadingItem === item.id"
-                  ></i>
-                  查看更多
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-danger"
-                  @click="addToCart(item.id)"
-                  :disabled="
-                    loadingStatus.loadingItem === item.id || !item.is_enabled
-                  "
-                >
-                  <i
-                    class="fas fa-spinner fa-pulse"
-                    v-if="loadingStatus.loadingItem === item.id"
-                  ></i>
-                  加到購物車
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
       <!-- 購物車列表 -->
       <template v-if="carts.carts && carts.carts.length === 0">
         <div class="text-end">

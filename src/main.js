@@ -3,6 +3,8 @@ import { createPinia } from 'pinia'
 import Loading from 'vue-loading-overlay'
 import 'bootstrap/scss/bootstrap.scss'
 import 'bootstrap-icons/font/bootstrap-icons.scss'
+
+import 'vue-loading-overlay/dist/css/index.css'
 import router from './router'
 import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate'
 

@@ -10,8 +10,10 @@ const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env
 const products = ref([])
 const pagination = ref({})
 const categories = ref(['動物', '食物'])
+const isLoading = ref(false)
 
 const getData = (page = 1) => {
+  isLoading.value = true
   const { category = '' } = route.query
   axios
     .get(
@@ -22,6 +24,9 @@ const getData = (page = 1) => {
       pagination.value = res.data.pagination
     })
     .catch((err) => alert(err.response.data.message))
+    .finally(() => {
+      isLoading.value = false
+    })
 }
 
 onMounted(() => {
@@ -43,6 +48,7 @@ watch(
 </script>
 
 <template>
+  <VueLoading :active="isLoading" :z-index="1060" />
   <div
     class="position-relative d-flex align-items-center justify-content-center"
     style="min-height: 400px"

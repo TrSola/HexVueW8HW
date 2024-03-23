@@ -61,14 +61,15 @@ const getCoupons = (page = 1) => {
     .then((response) => {
       coupons.value = response.data.coupons
       pagination.value = response.data.pagination
-      isLoading.value = false
     })
     .catch((error) => {
-      isLoading.value = false
       Toast.fire({
         icon: 'warning',
         title: error.response.data.message
       })
+    })
+    .finally(() => {
+      isLoading.value = false
     })
 }
 

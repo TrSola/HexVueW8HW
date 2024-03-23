@@ -41,13 +41,14 @@ const getOrders = (currentPage = 1) => {
     .then((response) => {
       orders.value = response.data.orders
       pagination.value = response.data.pagination
-      isLoading.value = false
     })
     .catch(() => {
       Toast.fire({
         icon: 'warning',
         title: '取得訂單失敗'
       })
+    })
+    .finally(() => {
       isLoading.value = false
     })
 }
