@@ -30,7 +30,7 @@
           <p class="mb-0">01-2345-6789</p>
           <p class="mb-0">Willy@gmail.com</p>
         </div>
-        <p class="mb-0">© 2023 LOGO All Rights Reserved.</p>
+        <p class="mb-0">© 2024 LOGO All Rights Reserved.</p>
       </div>
     </div>
   </div>

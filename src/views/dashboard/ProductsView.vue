@@ -72,7 +72,7 @@ const confirmUpdate = () => {
       .put(`${apiAdmin}/product/${tempProduct.value.id}`, {
         data: tempProduct.value
       })
-      .then((res) => {
+      .then(() => {
         SwalHandle.showSuccessMsg('已更新產品資料')
         productModal2.value.hideModal()
         getData()
