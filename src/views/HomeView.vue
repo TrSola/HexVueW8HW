@@ -33,11 +33,6 @@ const getFoodData = (page = 1) => {
 }
 
 onMounted(() => {
-  // const token = document.cookie.replace(
-  //   /(?:(?:^|.*;\s*)WillyToken\s*=\s*([^;]*).*$)|^.*$/,
-  //   '$1'
-  // )
-  // axios.defaults.headers.common.Authorization = token
   getAnimalData()
   getFoodData()
 })
@@ -149,7 +144,7 @@ onMounted(() => {
           <div class="carousel-item active">
             <div class="row justify-content-center py-7">
               <div class="col-md-6 text-center">
-                <h3>除了可愛的動物 還有好吃的食品哦</h3>
+                <h3>除了可愛的動物 這裡還有好吃的食品哦</h3>
                 <p class="my-5">
                   能在這茫茫人海之中相遇，便是一種難得的緣分，又彷彿是宇宙間的安排，大家才得以相聚於此，所以，珍惜還能待在一起的時光吧！
                 </p>

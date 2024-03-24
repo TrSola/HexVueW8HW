@@ -23,12 +23,16 @@ const login = () => {
     })
     .catch((err) => alert(err.response.data.message))
 }
+
+const backToHome = () => {
+  router.push('/')
+}
 </script>
 
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <h1 class="h3 mb-3">請先登入</h1>
+      <h1 class="h3 mb-3 text-center">請先登入</h1>
       <div class="col-8">
         <form class="form-signin" @submit.prevent>
           <div class="form-floating">
@@ -40,7 +44,7 @@ const login = () => {
               v-model="user.username"
               placeholder="xxx@gmail.com"
             />
-            <label for="email">Email Address</label>
+            <label for="email">請輸入帳號</label>
           </div>
           <div class="form-floating">
             <input
@@ -51,7 +55,7 @@ const login = () => {
               placeholder="password"
               required
             />
-            <label for="password">Password</label>
+            <label for="password">請輸入密碼</label>
           </div>
           <button
             class="btn btn-dark btn-lg w-100 mt-3"
@@ -60,9 +64,15 @@ const login = () => {
           >
             登入
           </button>
+          <button
+            class="btn btn-light btn-lg w-100 mt-3"
+            type="button"
+            @click.prevent="backToHome"
+          >
+            回首頁
+          </button>
         </form>
       </div>
     </div>
-    <p class="mt-5 text-muted">© 2023~2123 - Willy</p>
   </div>
 </template>
