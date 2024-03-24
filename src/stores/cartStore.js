@@ -1,19 +1,9 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import axios from 'axios'
-import Swal from 'sweetalert2'
 import '../assets/main.css'
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'center',
-  iconColor: 'white',
-  customClass: {
-    popup: 'colored-toast'
-  },
-  showConfirmButton: false,
-  timer: 1500,
-  timerProgressBar: true
-})
+import { SwalHandle } from '@/stores/sweetAlertStore'
+
 const { VITE_APP_URL: apiUrl, VITE_APP_PATH: apiPath } = import.meta.env
 export const useCartStore = defineStore('cartStore', () => {
   const carts = ref([])
@@ -41,10 +31,7 @@ export const useCartStore = defineStore('cartStore', () => {
     axios
       .post(url, { data: cartData })
       .then(() => {
-        Toast.fire({
-          icon: 'success',
-          title: '加入購物車成功'
-        })
+        SwalHandle.showSuccessMsg('加入購物車成功')
         getCart()
       })
       .catch((err) => {

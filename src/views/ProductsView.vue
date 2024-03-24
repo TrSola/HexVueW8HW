@@ -99,6 +99,7 @@ watch(
                     <RouterLink
                       :to="`/products`"
                       class="py-2 d-block text-muted"
+                      :class="{ activeCategory: !route.query.category }"
                       >全部商品</RouterLink
                     >
                   </li>
@@ -106,6 +107,7 @@ watch(
                     <RouterLink
                       :to="`/products?category=${item}`"
                       class="py-2 d-block text-muted"
+                      :class="{ activeCategory: route.query.category === item }"
                       >{{ item }}</RouterLink
                     >
                   </li>
@@ -116,14 +118,6 @@ watch(
         </div>
       </div>
       <div class="col-md-8">
-        <template v-if="!products.length">
-          <div>載入中</div>
-        </template>
-        <template v-else>
-          <div>
-            {{ `此頁共顯示 ${products.length} 項產品` }}
-          </div>
-        </template>
         <div class="row">
           <div class="col-md-6" v-for="product in products" :key="product.id">
             <RouterLink class="mb-0 mt-3" :to="`/product/${product.id}`">
@@ -140,11 +134,11 @@ watch(
                   <!-- <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i> -->
                 </a>
                 <div class="card-body p-0">
-                  <h4 class="mb-0 mt-3">
+                  <h4 class="mb-2 mt-3">
                     {{ product.title }}
                   </h4>
                   <p class="card-text mb-0">
-                    NT${{ product.price }}
+                    <span class="fw-bold me-3"> NT${{ product.price }} </span>
                     <span class="text-muted"
                       ><del>NT${{ product.origin_price }}</del></span
                     >
@@ -167,3 +161,9 @@ watch(
     </div>
   </div>
 </template>
+
+<style>
+.activeCategory {
+  font-weight: bold;
+}
+</style>
