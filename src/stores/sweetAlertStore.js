@@ -14,6 +14,7 @@ export const SwalHandle = {
       }
     }).fire({
       icon: 'error',
+      iconColor: 'gray',
       title
     })
   },
@@ -30,6 +31,7 @@ export const SwalHandle = {
       }
     }).fire({
       icon: 'success',
+      iconColor: 'black',
       title
     })
   },

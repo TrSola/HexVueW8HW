@@ -63,7 +63,7 @@ onMounted(() => {
 
 <template>
   <VueLoading :active="isLoading" :z-index="1060" />
-  <div class="container">
+  <div class="container mt-3">
     <div class="row justify-content-center">
       <div class="col-md-10">
         <h3 class="fw-bold mb-4 pt-3">結帳頁面</h3>

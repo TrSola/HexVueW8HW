@@ -1,6 +1,6 @@
 <script setup>
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import axios from 'axios'
 import { SwalHandle } from '@/stores/sweetAlertStore'
 import Swal from 'sweetalert2'
@@ -46,7 +46,6 @@ const deleteAllCarts = () => {
     denyButtonText: '再想想好了'
   })
     .then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         SwalHandle.showSuccessMsg('刪除成功')
         axios
@@ -116,7 +115,7 @@ const addCouponCode = () => {
   }
   axios
     .post(url, { data: coupon })
-    .then((response) => {
+    .then(() => {
       SwalHandle.showSuccessMsg('已加入優惠券')
       getCart()
       loadingStatus.value.loadingItem = ''
@@ -128,136 +127,221 @@ const addCouponCode = () => {
     })
 }
 
+// const calculateTotal = (newCarts) => {
+//   let total = 0
+//   // 遍历购物车中的每个商品，计算总价
+//   newCarts.forEach((cartItem) => {
+//     total += cartItem.product.price * cartItem.qty
+//   })
+//   // 将计算结果赋值给 carts.total
+//   carts.total = total
+// }
+
+// watch(
+//   () => carts.carts,
+//   (newCarts, oldCarts) => {
+//     // 当购物车商品数量发生变化时，重新计算购物车总价
+//     calculateTotal(newCarts)
+//   }
+// )
+
 onMounted(() => {
   getCart()
 })
 </script>
 
 <template>
+  <!-- {{ carts.carts }} -->
   <VueLoading :active="isLoading" :z-index="1060" />
   <div class="container">
-    <div class="mt-4">
-      <!-- 購物車列表 -->
-      <template v-if="carts.carts && carts.carts.length === 0">
-        <div class="text-end">
-          <h2>試試放一項商品到購物車中吧</h2>
-        </div>
-      </template>
-      <template v-else>
-        <div class="text-end">
-          <button
-            class="btn btn-outline-danger"
-            type="button"
-            @click="deleteAllCarts"
-          >
-            清空購物車
-          </button>
-        </div>
-      </template>
-      <table
-        class="table align-middle"
-        v-if="carts.carts && carts.carts.length !== 0"
-      >
-        <thead>
-          <tr>
-            <th></th>
-            <th>品名</th>
-            <th style="width: 150px">數量/單位</th>
-            <th>單價</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template v-if="carts.carts">
-            <tr v-for="cartItem in carts.carts" :key="cartItem.id">
-              <td>
-                <button
-                  type="button"
-                  class="btn btn-outline-danger btn-sm"
-                  @click="removeCartItem(cartItem.id)"
-                  :disabled="loadingStatus.loadingItem === cartItem.id"
+    <div class="mt-6">
+      <div class="row">
+        <template v-if="carts.carts && carts.carts.length === 0">
+          <div class="text-end">
+            <h2>試試放一項商品到購物車中吧</h2>
+          </div>
+        </template>
+        <template v-else>
+          <div class="text-end">
+            <button
+              class="btn btn-outline-dark"
+              type="button"
+              @click="deleteAllCarts"
+            >
+              清空購物車
+            </button>
+          </div>
+          <h3 class="mt-3 mb-4">購物車</h3>
+          <div class="col-md-8">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" class="border-0 ps-0">商品名稱</th>
+                  <th scope="col" class="border-0">商品數量</th>
+                  <th scope="col" class="border-0">商品價格</th>
+                  <th scope="col" class="border-0"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="border-bottom border-top"
+                  v-for="cartItem in carts.carts"
+                  :key="cartItem.id"
                 >
-                  <i
-                    class="fas fa-spinner fa-pulse"
-                    v-if="loadingStatus.loadingItem === cartItem.id"
-                  ></i>
-                  x
-                </button>
-              </td>
-              <td>
-                {{ cartItem.product.title }}
-                <div class="text-success" v-if="cartItem.coupon">
-                  已套用優惠券
-                </div>
-              </td>
-              <td>
-                <div class="input-group input-group-sm mb-1 mt-1">
-                  <div class="input-group">
-                    <input
-                      v-model.number="cartItem.qty"
-                      @blur="updateCart(cartItem)"
-                      :disabled="loadingStatus.loadingItem === cartItem.id"
-                      min="1"
-                      type="number"
-                      class="form-control"
+                  <th scope="row" class="border-0 px-0 font-weight-normal py-4">
+                    <img
+                      :src="cartItem.product.imageUrl"
+                      alt="商品圖片"
+                      style="width: 72px; height: 72px; object-fit: cover"
                     />
-                    <span class="input-group-text" id="basic-addon2">{{
-                      cartItem.product.unit
-                    }}</span>
-                  </div>
-                </div>
-              </td>
-              <td class="text-end">
-                <small
-                  v-if="carts.final_total !== carts.total"
-                  class="text-success"
-                  >折扣價：</small
+                    <p class="mb-0 fw-bold ms-3 d-inline-block">
+                      {{ cartItem.product.title }}
+                    </p>
+                  </th>
+                  <td class="border-0 align-middle" style="max-width: 160px">
+                    <div class="input-group pe-5">
+                      <div class="input-group-prepend">
+                        <button
+                          class="btn btn-outline-dark border-0 py-2"
+                          type="button"
+                          id="button-addon1"
+                          @click="cartItem.qty--"
+                          :disabled="cartItem.qty === 1"
+                        >
+                          <i class="fas fa-minus"></i>
+                        </button>
+                      </div>
+                      <input
+                        v-model.number="cartItem.qty"
+                        type.prevent="number"
+                        @blur="updateCart(cartItem)"
+                        :disabled="loadingStatus.loadingItem === cartItem.id"
+                        class="form-control border-0 text-center my-auto shadow-none"
+                        placeholder=""
+                        aria-label="Example text with button addon"
+                        aria-describedby="button-addon1"
+                        min="1"
+                      />
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-outline-dark border-0 py-2"
+                          type="button"
+                          id="button-addon2"
+                          @click="cartItem.qty++"
+                        >
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="border-0 align-middle">
+                    <p class="mb-0 ms-auto">
+                      {{ cartItem.product.price * cartItem.qty }}
+                    </p>
+                  </td>
+                  <td
+                    class="border-0 align-middle"
+                    @click="removeCartItem(cartItem.id)"
+                    :disabled="loadingStatus.loadingItem === cartItem.id"
+                    style="cursor: pointer"
+                  >
+                    <i class="fas fa-times"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="input-group w-50 mb-3">
+              <input
+                type="text"
+                class="form-control rounded-0 border-bottom border-top-0 border-start-0 border-end-0 shadow-none"
+                placeholder="請輸入優惠碼"
+                aria-label="Recipient's username"
+                aria-describedby="button-addon2"
+                v-model="couponCode"
+              />
+              <div class="input-group-append">
+                <button
+                  @click="addCouponCode"
+                  class="btn btn-outline-dark border-bottom border-top-0 border-start-0 border-end-0 rounded-0"
+                  type="button"
+                  id="button-addon2"
                 >
-                {{ Math.floor(carts.final_total) }}
-              </td>
-            </tr>
-          </template>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="3" class="text-end">總計</td>
-            <td class="text-end">{{ carts.total }}</td>
-          </tr>
-          <tr v-if="carts.final_total !== carts.total">
-            <td colspan="3" class="text-end text-success">折扣價</td>
-            <td class="text-end text-success">
-              {{ Math.floor(carts.final_total) }}
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-      <div
-        class="input-group mb-3 input-group-sm"
-        v-if="carts.carts && carts.carts.length !== 0"
-      >
-        <input
-          type="text"
-          class="form-control"
-          v-model="couponCode"
-          placeholder="請輸入優惠碼"
-        />
-        <div class="input-group-append">
-          <button
-            class="btn btn-outline-secondary"
-            type="button"
-            @click="addCouponCode"
-          >
-            套用優惠碼
-          </button>
-        </div>
-      </div>
-      <p class="text-muted">輸入優惠碼"迷你奧利給"全站商品享5折優惠</p>
-      <div
-        class="d-flex justify-content-end mb-5"
-        v-if="carts.carts && carts.carts.length !== 0"
-      >
-        <router-link to="/checkOut" class="btn btn-dark"
-          >現在去結帳</router-link
-        >
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+            <p class="text-muted">
+              2025/7/31前輸入優惠碼「迷你奧利給」全站商品享5折優惠
+            </p>
+          </div>
+          <div class="col-md-4">
+            <div class="border p-4 mb-4">
+              <h4 class="fw-bold mb-4">訂單資料</h4>
+              <table class="table text-muted border-bottom">
+                <tbody>
+                  <tr>
+                    <th
+                      scope="row"
+                      class="border-0 px-0 pt-4 font-weight-normal"
+                    >
+                      小計
+                    </th>
+                    <td class="text-end border-0 px-0 pt-4">
+                      {{ carts.total }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th
+                      scope="row"
+                      class="border-0 px-0 pt-0 pb-4 font-weight-normal"
+                    >
+                      付款方式
+                    </th>
+                    <td class="text-end border-0 px-0 pt-0 pb-4">ApplePay</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div
+                class="d-flex justify-content-between mt-4"
+                v-if="carts.final_total === carts.total"
+              >
+                <p class="mb-0 h4 fw-bold">總計</p>
+                <p class="mb-0 h4 fw-bold">
+                  NT$
+                  {{ carts.total }}
+                </p>
+              </div>
+
+              <div v-else>
+                <div class="d-flex justify-content-between mt-4">
+                  <p
+                    class="mb-0 h4 fw-bold text-del"
+                    style="text-decoration: line-through"
+                  >
+                    總計
+                  </p>
+                  <p
+                    class="mb-0 h4 fw-bold"
+                    style="text-decoration: line-through"
+                  >
+                    NT$
+                    {{ carts.total }}
+                  </p>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <p class="text-end text-muted mb-0 h4 fw-bold">折扣價</p>
+                  <p class="mb-0 h4 fw-bold">
+                    NT$
+                    {{ Math.floor(carts.final_total) }}
+                  </p>
+                </div>
+              </div>
+              <router-link to="/checkOut" class="btn btn-dark w-100 mt-4">
+                去結帳</router-link
+              >
+            </div>
+          </div>
+        </template>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-/* @charset "UTF-8"; */
+@charset "UTF-8";
 /*!
  * Bootstrap  v5.3.2 (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors
@@ -738,7 +738,7 @@ progress {
 .container-lg,
 .container-md,
 .container-sm {
-  /* --bs-gutter-x: 0.75rem; */
+  --bs-gutter-x: 0.75rem;
   --bs-gutter-y: 0;
   width: 100%;
   padding-right: calc(var(--bs-gutter-x) * 0.5);
@@ -782,7 +782,7 @@ progress {
 }
 
 .row {
-  /* --bs-gutter-x: 1.5rem; */
+  --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   display: flex;
   flex-wrap: wrap;
@@ -12849,8 +12849,3 @@ textarea.form-control-lg {
     width: 50% !important;
   }
 }/*# sourceMappingURL=all.css.map */
-
-a:hover {
-  text-decoration: none;
-}
-
