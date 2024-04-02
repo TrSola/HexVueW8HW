@@ -127,23 +127,23 @@ const addCouponCode = () => {
     })
 }
 
-// const calculateTotal = (newCarts) => {
-//   let total = 0
-//   // 遍历购物车中的每个商品，计算总价
-//   newCarts.forEach((cartItem) => {
-//     total += cartItem.product.price * cartItem.qty
-//   })
-//   // 将计算结果赋值给 carts.total
-//   carts.total = total
-// }
+const calculateTotal = (newCarts) => {
+  let total = 0
+  // 遍历购物车中的每个商品，计算总价
+  newCarts.forEach((cartItem) => {
+    total += cartItem.product.price * cartItem.qty
+  })
+  // 将计算结果赋值给 carts.total
+  carts.total = total
+}
 
-// watch(
-//   () => carts.carts,
-//   (newCarts, oldCarts) => {
-//     // 当购物车商品数量发生变化时，重新计算购物车总价
-//     calculateTotal(newCarts)
-//   }
-// )
+watch(
+  () => carts.carts,
+  (newCarts, oldCarts) => {
+    // 当购物车商品数量发生变化时，重新计算购物车总价
+    calculateTotal(newCarts)
+  }
+)
 
 onMounted(() => {
   getCart()
@@ -151,14 +151,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- {{ carts.carts }} -->
+  {{ carts.carts && carts.carts[0] }}
   <VueLoading :active="isLoading" :z-index="1060" />
   <div class="container">
     <div class="mt-6">
       <div class="row">
         <template v-if="carts.carts && carts.carts.length === 0">
           <div class="text-end">
-            <h2>試試放一項商品到購物車中吧</h2>
+            <h2 class="pt-7 mt-6 h1" style="font-size: 58px">
+              <strong>試試放一項商品到購物車中吧</strong>
+            </h2>
+            <div class="pb-7"></div>
+            <div class="pb-7"></div>
+            <div class="pb-7"></div>
+            <div class="pb-5"></div>
           </div>
         </template>
         <template v-else>
@@ -171,7 +177,7 @@ onMounted(() => {
               清空購物車
             </button>
           </div>
-          <h3 class="mt-3 mb-4">購物車</h3>
+          <h3 class="mt-3 mb-5">購物車</h3>
           <div class="col-md-8">
             <table class="table">
               <thead>
