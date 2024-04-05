@@ -4,8 +4,9 @@ import { onMounted, ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { useCartStore } from '../stores/cartStore'
-import Swiper from 'swiper'
 import 'swiper/css'
+
+import { Swiper, SwiperSlide } from 'swiper/vue'
 
 const { VITE_APP_URL: apiUrl, VITE_APP_PATH: apiPath } = import.meta.env
 const route = useRoute()
@@ -71,30 +72,6 @@ onMounted(() => {
   getProduct()
   getData()
   window.scrollTo(0, 0)
-  // eslint-disable-next-line no-unused-vars
-  const mySwiper = new Swiper('.swiper-container', {
-    loop: true,
-    autoplay: {
-      delay: 2500,
-      disableOnInteraction: false
-    },
-    slidesPerView: 3,
-    spaceBetween: 10,
-    breakpoints: {
-      767: {
-        slidesPerView: 2,
-        spaceBetween: 30
-      },
-      374: {
-        slidesPerView: 1.2,
-        spaceBetween: 5
-      }
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
-    }
-  })
 })
 </script>
 
@@ -211,46 +188,47 @@ onMounted(() => {
         <p class="text-muted">{{ product.content }}</p>
       </div>
     </div>
-    <h3 class="fw-bold">看看更多商品圖</h3>
+
+    <h3 class="fw-bold">看看更多商品圖(可左右滑動)</h3>
     <div>
       <div class="swiper-container-wrapper">
         <div class="swiper-container mt-4 mb-5">
           <div class="swiper-wrapper">
-            <div
-              class="swiper-slide"
-              v-for="item in filteredProducts"
-              :key="item.id"
-            >
-              <RouterLink
-                class="mb-0 mt-3"
-                :to="`/product/${item.id}`"
-                @click="refreshPage"
-              >
-                <div
-                  class="card border-0 mb-4 position-relative position-relative"
-                  v-if="item.id !== product.id"
-                >
-                  <img
-                    :src="item.imageUrl"
-                    class="card-img-top rounded-0 object-fit-cover"
-                    alt="..."
-                    height="350"
-                  />
-                  <a href="#" class="text-dark"> </a>
-                  <div class="card-body p-0">
-                    <h4 class="mb-0 mt-3">
-                      {{ item.title }}
-                    </h4>
-                    <p class="card-text mb-0">
-                      ${{ item.price }}
-                      <span class="text-muted"
-                        ><del>${{ item.origin_price }}</del></span
-                      >
-                    </p>
-                    <p class="text-muted mt-3"></p>
-                  </div>
-                </div>
-              </RouterLink>
+            <div class="swiper-slide">
+              <swiper :slides-per-view="3" :space-between="25">
+                <swiper-slide v-for="item in filteredProducts" :key="item.id">
+                  <RouterLink
+                    class="mb-0 mt-3"
+                    :to="`/product/${item.id}`"
+                    @click="refreshPage"
+                  >
+                    <div
+                      class="card border-0 mb-4 position-relative position-relative"
+                      v-if="item.id !== product.id"
+                    >
+                      <img
+                        :src="item.imageUrl"
+                        class="card-img-top rounded-0 object-fit-cover"
+                        alt="..."
+                        height="350"
+                      />
+                      <a href="#" class="text-dark"> </a>
+                      <div class="card-body p-0">
+                        <h4 class="mb-0 mt-3">
+                          {{ item.title }}
+                        </h4>
+                        <p class="card-text mb-0">
+                          ${{ item.price }}
+                          <span class="text-muted"
+                            ><del>${{ item.origin_price }}</del></span
+                          >
+                        </p>
+                        <p class="text-muted mt-3"></p>
+                      </div>
+                    </div>
+                  </RouterLink>
+                </swiper-slide>
+              </swiper>
             </div>
           </div>
         </div>
@@ -258,9 +236,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
-<style>
-.swiper-container-wrapper {
-  overflow-x: auto;
-}
-</style>
