@@ -43,7 +43,9 @@ const deleteAllCarts = () => {
     title: '是否清空購物車?',
     showDenyButton: true,
     confirmButtonText: '確認清空',
-    denyButtonText: '再想想好了'
+    denyButtonText: '再想想好了',
+    confirmButtonColor: 'gray',
+    denyButtonColor: 'black'
   })
     .then((result) => {
       if (result.isConfirmed) {
@@ -86,7 +88,9 @@ const removeCartItem = (id) => {
     title: '確認要刪除',
     showDenyButton: true,
     confirmButtonText: '確認刪除',
-    denyButtonText: '再想想好了'
+    denyButtonText: '再想想好了',
+    confirmButtonColor: 'gray',
+    denyButtonColor: 'black'
   }).then((result) => {
     /* Read more about isConfirmed, isDenied below */
     if (result.isConfirmed) {

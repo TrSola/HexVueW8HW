@@ -111,7 +111,7 @@ onMounted(() => {
           </div>
           <a
             class="carousel-control-prev"
-            href="#"
+            href="#/products"
             role="button"
             data-slide="prev"
           >
