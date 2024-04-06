@@ -4,9 +4,22 @@ import FooterComponent from '@/components/FooterComponent.vue'
 </script>
 
 <template>
-  <NavbarComponent />
-  <RouterView />
-  <div class="FooterComponent"><FooterComponent /></div>
+  <div class="wrapper">
+    <NavbarComponent />
+    <RouterView />
+  </div>
+  <div class="footerComponent"><FooterComponent /></div>
 </template>
 
-<style></style>
+<style>
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.footerComponent {
+  margin-top: auto;
+}
+</style>

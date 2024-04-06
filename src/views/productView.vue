@@ -5,8 +5,19 @@ import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { useCartStore } from '../stores/cartStore'
 import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
 
 import { Swiper, SwiperSlide } from 'swiper/vue'
+// import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules'
+
+const onSwiper = (swiper) => {
+  console.log(swiper)
+}
+const onSlideChange = () => {
+  console.log('slide change')
+}
 
 const { VITE_APP_URL: apiUrl, VITE_APP_PATH: apiPath } = import.meta.env
 const route = useRoute()
@@ -152,10 +163,10 @@ onMounted(() => {
               <input
                 type.prevent="number"
                 class="form-control border-0 text-center my-auto shadow-none bg-light"
-                placeholder=""
+                placeholder="請輸入數量"
                 aria-label="Example text with button addon"
                 aria-describedby="button-addon1"
-                v-model="product.num"
+                v-model.number="product.num"
                 value="1"
               />
               <div class="input-group-append">
@@ -195,7 +206,19 @@ onMounted(() => {
         <div class="swiper-container mt-4 mb-5">
           <div class="swiper-wrapper">
             <div class="swiper-slide">
-              <swiper :slides-per-view="3" :space-between="25">
+              <swiper
+                :slides-per-view="3"
+                :space-between="25"
+                class="mySwiper"
+                :navigation="{
+                  nextEl: '.swiper-button-next',
+                  prevEl: '.swiper-button-prev'
+                }"
+                :pagination="{ clickable: true }"
+                :scrollbar="{ draggable: true }"
+                @swiper="onSwiper"
+                @slideChange="onSlideChange"
+              >
                 <swiper-slide v-for="item in filteredProducts" :key="item.id">
                   <RouterLink
                     class="mb-0 mt-3"
@@ -236,3 +259,18 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<style>
+.swiper-button-next {
+  background: url(https://images.unsplash.com/photo-1711972495282-5e6d32c97ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8);
+  text-indent: 101%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.swiper-button-prev {
+  background: url(https://images.unsplash.com/photo-1712238645781-c4d9dbbe9b88?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHx8);
+  text-indent: 101%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+</style>

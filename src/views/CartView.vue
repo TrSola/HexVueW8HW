@@ -177,10 +177,9 @@ onMounted(() => {
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col" class="border-0 ps-0">商品名稱</th>
-                  <th scope="col" class="border-0">商品數量</th>
+                  <th scope="col" class="border-0 ps-0">商品</th>
+                  <th scope="col" class="border-0 ps-3">商品數量</th>
                   <th scope="col" class="border-0">商品價格</th>
-                  <th scope="col" class="border-0"></th>
                 </tr>
               </thead>
               <tbody>
