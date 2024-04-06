@@ -179,7 +179,7 @@ onMounted(() => {
                 <tr>
                   <th scope="col" class="border-0 ps-0">商品</th>
                   <th scope="col" class="border-0 ps-3">商品數量</th>
-                  <th scope="col" class="border-0">商品價格</th>
+                  <th scope="col" class="border-0">價格</th>
                 </tr>
               </thead>
               <tbody>
@@ -192,14 +192,14 @@ onMounted(() => {
                     <img
                       :src="cartItem.product.imageUrl"
                       alt="商品圖片"
-                      style="width: 72px; height: 72px; object-fit: cover"
+                      style="width: 52px; height: 52px; object-fit: cover"
                     />
-                    <p class="mb-0 fw-bold ms-3 d-inline-block">
+                    <p class="mb-0 fw-bold d-inline-block">
                       {{ cartItem.product.title }}
                     </p>
                   </th>
                   <td class="border-0 align-middle" style="max-width: 160px">
-                    <div class="input-group pe-5">
+                    <div class="input-group">
                       <div class="input-group-prepend">
                         <button
                           class="btn btn-outline-dark border-0 py-2"
