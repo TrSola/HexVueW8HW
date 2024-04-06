@@ -1,6 +1,6 @@
 <script setup>
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { SwalHandle } from '@/stores/sweetAlertStore'
 import Swal from 'sweetalert2'
@@ -131,23 +131,15 @@ const addCouponCode = () => {
     })
 }
 
-const calculateTotal = (newCarts) => {
-  let total = 0
-  // 遍历购物车中的每个商品，计算总价
-  newCarts.forEach((cartItem) => {
-    total += cartItem.product.price * cartItem.qty
-  })
-  // 将计算结果赋值给 carts.total
-  carts.total = total
+const addCartItemQty = (cartItem) => {
+  cartItem.qty++
+  updateCart(cartItem)
 }
 
-watch(
-  () => carts.carts,
-  (newCarts, oldCarts) => {
-    // 当购物车商品数量发生变化时，重新计算购物车总价
-    calculateTotal(newCarts)
-  }
-)
+const minusCartItemQty = (cartItem) => {
+  cartItem.qty--
+  updateCart(cartItem)
+}
 
 onMounted(() => {
   getCart()
@@ -155,7 +147,6 @@ onMounted(() => {
 </script>
 
 <template>
-  {{ carts.carts && carts.carts[0] }}
   <VueLoading :active="isLoading" :z-index="1060" />
   <div class="container">
     <div class="mt-6">
@@ -215,7 +206,7 @@ onMounted(() => {
                           class="btn btn-outline-dark border-0 py-2"
                           type="button"
                           id="button-addon1"
-                          @click="cartItem.qty--"
+                          @click="minusCartItemQty(cartItem)"
                           :disabled="cartItem.qty === 1"
                         >
                           <i class="fas fa-minus"></i>
@@ -237,7 +228,7 @@ onMounted(() => {
                           class="btn btn-outline-dark border-0 py-2"
                           type="button"
                           id="button-addon2"
-                          @click="cartItem.qty++"
+                          @click="addCartItemQty(cartItem)"
                         >
                           <i class="fas fa-plus"></i>
                         </button>
