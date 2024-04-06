@@ -6,6 +6,7 @@ import { SwalHandle } from '@/stores/sweetAlertStore'
 import Swal from 'sweetalert2'
 import { useCartStore } from '@/stores/cartStore'
 import { storeToRefs } from 'pinia'
+
 const { VITE_APP_URL: apiUrl, VITE_APP_PATH: apiPath } = import.meta.env
 
 const loadingStatus = ref({

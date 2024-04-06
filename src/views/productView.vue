@@ -97,39 +97,7 @@ onMounted(() => {
                 height="550"
               />
             </div>
-            <!-- <div class="carousel-item">
-              <img
-                src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80"
-                class="d-block w-100"
-                alt="..."
-              />
-            </div>
-            <div class="carousel-item">
-              <img
-                src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80"
-                class="d-block w-100"
-                alt="..."
-              />
-            </div> -->
           </div>
-          <a
-            class="carousel-control-prev"
-            href="#/products"
-            role="button"
-            data-slide="prev"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a
-            class="carousel-control-next"
-            href="#"
-            role="button"
-            data-slide="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
         </div>
       </div>
       <div class="col-md-5">
@@ -239,18 +207,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
-<style>
-.swiper-button-next {
-  background: url(https://images.unsplash.com/photo-1711972495282-5e6d32c97ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8);
-  text-indent: 101%;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.swiper-button-prev {
-  background: url(https://images.unsplash.com/photo-1712238645781-c4d9dbbe9b88?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHx8);
-  text-indent: 101%;
-  white-space: nowrap;
-  overflow: hidden;
-}
-</style>
