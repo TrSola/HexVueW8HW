@@ -10,14 +10,6 @@ import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 
 import { Swiper, SwiperSlide } from 'swiper/vue'
-// import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules'
-
-const onSwiper = (swiper) => {
-  console.log(swiper)
-}
-const onSlideChange = () => {
-  console.log('slide change')
-}
 
 const { VITE_APP_URL: apiUrl, VITE_APP_PATH: apiPath } = import.meta.env
 const route = useRoute()
@@ -206,19 +198,7 @@ onMounted(() => {
         <div class="swiper-container mt-4 mb-5">
           <div class="swiper-wrapper">
             <div class="swiper-slide">
-              <swiper
-                :slides-per-view="3"
-                :space-between="25"
-                class="mySwiper"
-                :navigation="{
-                  nextEl: '.swiper-button-next',
-                  prevEl: '.swiper-button-prev'
-                }"
-                :pagination="{ clickable: true }"
-                :scrollbar="{ draggable: true }"
-                @swiper="onSwiper"
-                @slideChange="onSlideChange"
-              >
+              <swiper :slides-per-view="3" :space-between="25">
                 <swiper-slide v-for="item in filteredProducts" :key="item.id">
                   <RouterLink
                     class="mb-0 mt-3"
