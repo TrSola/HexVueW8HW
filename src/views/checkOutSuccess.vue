@@ -1,4 +1,6 @@
-<script></script>
+<script>
+window.scrollTo(0, 0)
+</script>
 
 <template>
   <div class="position-relative d-flex">

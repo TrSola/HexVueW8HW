@@ -58,12 +58,10 @@ const getData = (page = 1) => {
 }
 
 const filteredProducts = computed(() => {
-  // 確保 products.value 是一個陣列，否則返回空陣列
   if (!Array.isArray(products.value)) {
     return []
   }
 
-  // 篩選出符合條件的產品
   return products.value.filter((item) => item.id !== product.value.id)
 })
 
