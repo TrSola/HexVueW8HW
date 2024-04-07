@@ -1,15 +1,28 @@
 <script setup>
-// import axios from 'axios'
 import '../assets/all.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
-import { onMounted } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCartStore } from '../stores/cartStore'
+import Collapse from 'bootstrap/js/dist/collapse'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const headerCollapse = ref(null)
+
 const cartStoreFromPinia = useCartStore()
 const { carts } = storeToRefs(cartStoreFromPinia)
 const { getCart } = cartStoreFromPinia
+
+watch(route, () => {
+  if (headerCollapse.value) {
+    headerCollapse.value.hide()
+  }
+})
+
 onMounted(() => {
   getCart()
+  headerCollapse.value = new Collapse(headerCollapse.value, { toggle: false })
 })
 </script>
 
@@ -33,6 +46,7 @@ onMounted(() => {
       <div
         class="collapse navbar-collapse justify-content-end"
         id="navbarNavAltMarkup"
+        ref="headerCollapse"
       >
         <div class="navbar-nav">
           <RouterLink class="nav-item nav-link me-4" to="/login"

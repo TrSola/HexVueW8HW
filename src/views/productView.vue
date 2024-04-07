@@ -189,7 +189,7 @@ onMounted(() => {
                           {{ item.title }}
                         </h4>
                         <p class="card-text mb-0">
-                          ${{ item.price }}
+                          <strong> ${{ item.price }} </strong>n
                           <span class="text-muted"
                             ><del>${{ item.origin_price }}</del></span
                           >
