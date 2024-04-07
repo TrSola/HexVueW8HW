@@ -99,7 +99,7 @@ onMounted(() => {
         </div>
       </div>
       <div class="col-md-5">
-        <h2 class="fw-bold h1 mb-1">{{ product.title }}</h2>
+        <h2 class="fw-bold h1 mb-1 mt-5">{{ product.title }}</h2>
         <p class="mb-0 text-muted text-end">
           <del>${{ product.origin_price }}</del>
         </p>

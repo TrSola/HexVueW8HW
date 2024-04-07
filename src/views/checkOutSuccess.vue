@@ -10,7 +10,7 @@ window.scrollTo(0, 0)
       </nav>
       <div class="row my-auto pb-7">
         <div class="col-md-4 d-flex flex-column">
-          <div class="my-auto">
+          <div class="my-auto text-center">
             <h2>感謝您的購買!</h2>
             <p>期待您下次光臨</p>
             <router-link to="/" class="btn btn-dark mt-4 px-5"

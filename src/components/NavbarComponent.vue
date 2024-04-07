@@ -16,9 +16,13 @@ const { getCart } = cartStoreFromPinia
 
 watch(route, () => {
   if (headerCollapse.value) {
-    headerCollapse.value.hide()
+    hideNav()
   }
 })
+
+const hideNav = () => {
+  headerCollapse.value.hide()
+}
 
 onMounted(() => {
   getCart()
@@ -28,10 +32,11 @@ onMounted(() => {
 
 <template>
   <nav
-    class="navbar navbar-expand-lg navbar-light position-fixed w-100 z-3 bg-light top-0 ps-4 py-3"
+    class="navbar navbar-expand-lg navbar-light position-fixed w-100 z-3 bg-light top-0 py-3"
   >
     <div class="container">
       <RouterLink class="nav-item nav-link me-4" to="/">SOUXI</RouterLink>
+
       <button
         class="navbar-toggler"
         type="button"
@@ -67,6 +72,7 @@ onMounted(() => {
               {{ carts?.carts?.length }}
             </span>
           </RouterLink>
+          <button @click="hideNav" class="navbar-toggler">收起選單</button>
         </div>
       </div>
     </div>
