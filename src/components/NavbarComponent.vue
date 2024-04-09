@@ -16,12 +16,12 @@ const { getCart } = cartStoreFromPinia
 
 watch(route, () => {
   if (headerCollapse.value) {
-    hideNav()
+    toggleNav()
   }
 })
 
-const hideNav = () => {
-  headerCollapse.value.hide()
+const toggleNav = () => {
+  headerCollapse.value.toggle()
 }
 
 onMounted(() => {
@@ -40,11 +40,10 @@ onMounted(() => {
       <button
         class="navbar-toggler"
         type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup"
         aria-expanded="false"
         aria-label="Toggle navigation"
+        @click="toggleNav()"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -72,7 +71,6 @@ onMounted(() => {
               {{ carts?.carts?.length }}
             </span>
           </RouterLink>
-          <button @click="hideNav" class="navbar-toggler">收起選單</button>
         </div>
       </div>
     </div>
