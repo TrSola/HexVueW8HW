@@ -6,12 +6,12 @@
   <p>請嘗試以下操作：</p>
   <ul>
     <li>檢查網址是否有誤</li>
-    <li>返回 <a href="/">首頁</a></li>
+    <li>返回 <a href="/#/home">首頁</a></li>
     <li>如果認為這是一個錯誤，請聯繫網站管理員</li>
   </ul>
 </template>
 
-<style>
+<style scoped>
 body {
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;

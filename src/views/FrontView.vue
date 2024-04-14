@@ -11,7 +11,7 @@ import FooterComponent from '@/components/FooterComponent.vue'
   <div class="footerComponent"><FooterComponent /></div>
 </template>
 
-<style>
+<style scoped>
 .wrapper {
   min-height: 100vh;
   display: flex;
