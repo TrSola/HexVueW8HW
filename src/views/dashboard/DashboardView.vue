@@ -3,7 +3,6 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import '@/assets/main.css'
 const Toast = Swal.mixin({
   toast: true,
   position: 'center',

@@ -1,5 +1,4 @@
 <script setup>
-import '@/assets/all.css'
 import axios from 'axios'
 import { ref, onMounted, watch } from 'vue'
 import PaginationComponent from '@/components/PaginationComponent.vue'

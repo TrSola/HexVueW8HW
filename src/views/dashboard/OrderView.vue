@@ -6,7 +6,6 @@ import { ref } from 'vue'
 import DelModal from '@/components/DelModal.vue'
 import OrderModal from '@/components/OrderModal.vue'
 import PaginationComponent from '@/components/PaginationComponent.vue'
-import '@/assets/main.css'
 import { SwalHandle } from '@/stores/sweetAlertStore'
 
 const orderModalRef = ref(null)

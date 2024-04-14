@@ -1,7 +1,6 @@
 <script setup>
 import axios from 'axios'
 
-import '@/assets/main.css'
 import { ref } from 'vue'
 
 import CouponModal from '@/components/CouponModal.vue'

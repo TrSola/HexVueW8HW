@@ -1,5 +1,4 @@
 <script setup>
-import '@/assets/all.css'
 import { onMounted, ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'

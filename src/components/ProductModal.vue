@@ -3,7 +3,6 @@ import useModal from '@/hooks/useModal'
 import { watch, ref } from 'vue'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import '../assets/main.css'
 
 const Toast = Swal.mixin({
   toast: true,

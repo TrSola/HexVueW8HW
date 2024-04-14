@@ -1,5 +1,4 @@
 <script setup>
-import '../assets/all.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import { onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
