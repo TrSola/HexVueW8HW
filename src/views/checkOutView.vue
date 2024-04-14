@@ -79,7 +79,7 @@ onMounted(() => {
           >
             <img
               :src="cartItem.product.imageUrl"
-              :alt="`${cartItem.product.title}的圖片`"
+              alt="要結帳的商品圖片"
               class="me-2"
               style="width: 48px; height: 48px; object-fit: cover"
             />

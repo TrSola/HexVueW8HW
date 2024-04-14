@@ -177,7 +177,7 @@ onMounted(() => {
                       <img
                         :src="item.imageUrl"
                         class="card-img-top rounded-0 object-fit-cover"
-                        alt="..."
+                        alt="更多商品圖片"
                         height="350"
                       />
                       <a href="#" class="text-dark"> </a>
