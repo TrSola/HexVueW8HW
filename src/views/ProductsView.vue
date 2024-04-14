@@ -49,21 +49,9 @@ watch(
 <template>
   <VueLoading :active="isLoading" :z-index="1060" />
   <div
-    class="position-relative d-flex align-items-center justify-content-center"
-    style="min-height: 400px"
+    class="position-relative d-flex align-items-center justify-content-center productsHeader"
   >
-    <div
-      class="position-absolute"
-      style="
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-image: url(https://images.unsplash.com/photo-1617110668704-3992ecde48ff?w=1950&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHpvbyUyMGZyaWVuZHxlbnwwfHwwfHx8MA%3D%3D);
-        background-position: center center;
-        opacity: 0.1;
-      "
-    ></div>
+    <div class="position-absolute productsHeaderImg"></div>
     <h2 class="fw-bold">挑選一些自己喜歡的商品吧！</h2>
   </div>
   <div class="container mt-md-5 mt-3 mb-7">
@@ -129,9 +117,7 @@ watch(
                   alt="商品圖片"
                   height="500"
                 />
-                <a href="#" class="text-dark">
-                  <!-- <i class="far fa-heart position-absolute" style="right: 16px; top: 16px"></i> -->
-                </a>
+                <a href="#" class="text-dark"> </a>
                 <div class="card-body p-0">
                   <h4 class="mb-2 mt-3">
                     {{ product.title }}
@@ -164,5 +150,19 @@ watch(
 <style>
 .activeCategory {
   font-weight: bold;
+}
+
+.productsHeader {
+  min-height: 400px;
+}
+
+.productsHeaderImg {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: url(https://images.unsplash.com/photo-1617110668704-3992ecde48ff?w=1950&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHpvbyUyMGZyaWVuZHxlbnwwfHwwfHx8MA%3D%3D);
+  background-position: center center;
+  opacity: 0.1;
 }
 </style>
