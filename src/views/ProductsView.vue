@@ -37,7 +37,6 @@ watch(
   () => {
     getData()
   }
-  // { deep: true }
 )
 </script>
 

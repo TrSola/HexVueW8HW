@@ -68,6 +68,11 @@ const refreshPage = () => {
   location.reload()
 }
 
+const addToCartAndNumToZero = () => {
+  addToCart(product.value.id, product.value.num)
+  product.value.num = 1
+}
+
 onMounted(() => {
   getProduct()
   getData()
@@ -141,7 +146,7 @@ onMounted(() => {
           <div class="col-6">
             <a
               class="text-nowrap btn btn-dark w-100 py-2"
-              @click.prevent="addToCart(product.id, product.num)"
+              @click.prevent="addToCartAndNumToZero"
               >加到購物車</a
             >
           </div>
