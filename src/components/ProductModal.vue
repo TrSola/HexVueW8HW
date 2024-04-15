@@ -78,6 +78,14 @@ const uploadFile = () => {
     })
 }
 
+const forcePositiveInteger = (event) => {
+  const input = event.target
+  const value = parseInt(input.value)
+  if (isNaN(value) || value <= 0 || !Number.isInteger(value)) {
+    input.value = ''
+  }
+}
+
 defineExpose({
   openModal,
   hideModal
@@ -254,7 +262,8 @@ defineExpose({
                         min="0"
                         class="form-control"
                         placeholder="請輸入原價"
-                        v-model.number="tempProductInProductModal.origin_price"
+                        @input="forcePositiveInteger"
+                        v-model="tempProductInProductModal.origin_price"
                       />
                     </div>
                     <div class="mb-3 col-md-6">
@@ -265,7 +274,8 @@ defineExpose({
                         min="0"
                         class="form-control"
                         placeholder="請輸入售價"
-                        v-model.number="tempProductInProductModal.price"
+                        @input="forcePositiveInteger"
+                        v-model="tempProductInProductModal.price"
                       />
                     </div>
                   </div>
