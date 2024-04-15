@@ -29,11 +29,6 @@ const getData = (page = 1) => {
 }
 
 onMounted(() => {
-  const token = document.cookie.replace(
-    /(?:(?:^|.*;\s*)WillyToken\s*=\s*([^;]*).*$)|^.*$/,
-    '$1'
-  )
-  axios.defaults.headers.common.Authorization = token
   getData()
 })
 
