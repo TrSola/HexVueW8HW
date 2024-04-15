@@ -1,46 +1,43 @@
 <script setup>
 import axios from 'axios'
-import Swal from 'sweetalert2'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'center',
-  iconColor: 'white',
-  customClass: {
-    popup: 'colored-toast'
-  },
-  showConfirmButton: false,
-  timer: 1500,
-  timerProgressBar: true
-})
-
+import { SwalHandle } from '@/stores/sweetAlertStore'
+const checkSuccess = ref(false)
 const router = useRouter()
 
 const checkLogin = () => {
-  const { VITE_APP_URL } = import.meta.env
-  axios
-    .post(`${VITE_APP_URL}/api/user/check`)
-    .then(() =>
-      Toast.fire({
-        icon: 'success',
-        title: '驗證身分成功'
+  const token = document.cookie.replace(
+    /(?:(?:^|.*;\s*)WillyToken\s*=\s*([^;]*).*$)|^.*$/,
+    '$1'
+  )
+  if (token) {
+    const { VITE_APP_URL } = import.meta.env
+    axios
+      .post(`${VITE_APP_URL}/api/user/check`)
+      .then((res) => {
+        if (res.data.success) {
+          checkSuccess.value = true
+        } else {
+          alert('驗證失敗')
+          router.push('/login')
+        }
       })
-    )
-    .catch((err) => {
-      alert(err.response.data.message)
-      router.push('/')
-    })
+      .catch((err) => {
+        alert(err.response.data.message)
+        router.push('/login')
+      })
+  } else {
+    alert('請先登入')
+    router.push('/login')
+  }
 }
 const logOut = () => {
   const { VITE_APP_URL } = import.meta.env
   axios
     .post(`${VITE_APP_URL}/logout`)
     .then(() => {
-      Toast.fire({
-        icon: 'success',
-        title: '登出成功'
-      })
+      SwalHandle.showSuccessMsg('登出成功')
       document.cookie = 'WillyToken=;expires='
       router.push('/')
     })
@@ -68,5 +65,5 @@ onMounted(() => {
     <RouterLink to="/admin/AdminCoupons">優惠券管理頁面</RouterLink> |
     <a href="#" @click.prevent="logOut">登出</a>
   </nav>
-  <RouterView />
+  <RouterView v-if="checkSuccess" />
 </template>
