@@ -15,6 +15,12 @@ const emits = defineEmits(['update-coupon'])
 const tempCoupon = ref({})
 const dueDate = ref('')
 
+const pricePercentageLimit = () => {
+  if (tempCoupon.value.percent <= 0 || tempCoupon.value.percent >= 100) {
+    tempCoupon.value.percent = ''
+  }
+}
+
 watch(
   () => props.coupon,
   (value) => {
@@ -100,8 +106,9 @@ defineExpose({
               type="number"
               class="form-control"
               id="price"
-              min="0"
-              v-model.number="tempCoupon.percent"
+              min="1"
+              v-model="tempCoupon.percent"
+              @input="pricePercentageLimit"
               placeholder="請輸入折扣百分比"
             />
           </div>

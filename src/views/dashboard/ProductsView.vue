@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 import ProductModal from '@/components/ProductModal.vue'
 import DelProductModal from '@/components/DelProductModal.vue'
@@ -96,7 +96,9 @@ const confirmDelete = () => {
     })
 }
 
-getData()
+onMounted(() => {
+  getData()
+})
 </script>
 
 <template>

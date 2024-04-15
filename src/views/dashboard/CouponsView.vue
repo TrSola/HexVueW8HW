@@ -1,7 +1,7 @@
 <script setup>
 import axios from 'axios'
 
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import CouponModal from '@/components/CouponModal.vue'
 import DelModal from '@/components/DelModal.vue'
@@ -105,7 +105,9 @@ const delCoupon = () => {
     })
 }
 
-getCoupons()
+onMounted(() => {
+  getCoupons()
+})
 </script>
 
 <template>

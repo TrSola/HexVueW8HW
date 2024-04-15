@@ -1,7 +1,7 @@
 <script setup>
 import axios from 'axios'
 
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 import DelModal from '@/components/DelModal.vue'
 import OrderModal from '@/components/OrderModal.vue'
@@ -86,7 +86,9 @@ const delOrder = () => {
     })
 }
 
-getOrders()
+onMounted(() => {
+  getOrders()
+})
 </script>
 
 <template>
