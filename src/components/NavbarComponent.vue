@@ -52,11 +52,11 @@ onMounted(() => {
         ref="headerCollapse"
       >
         <div class="navbar-nav">
-          <RouterLink class="nav-item nav-link me-4" to="/login"
-            >管理者登入</RouterLink
-          >
           <RouterLink class="nav-item nav-link me-4" to="/products"
             >販售處</RouterLink
+          >
+          <RouterLink class="nav-item nav-link me-4" to="/login"
+            >登入</RouterLink
           >
           <RouterLink
             class="nav-item nav-link me-4 position-relative"

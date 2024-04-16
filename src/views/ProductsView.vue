@@ -117,9 +117,9 @@ watch(
                     {{ product.title }}
                   </h4>
                   <p class="card-text mb-0">
-                    <span class="fw-bold me-3"> NT${{ product.price }} </span>
+                    <span class="fw-bold me-3"> NT$ {{ product.price }} </span>
                     <span class="text-muted"
-                      ><del>NT${{ product.origin_price }}</del></span
+                      ><del>NT$ {{ product.origin_price }}</del></span
                     >
                   </p>
                   <p class="text-muted mt-3"></p>

@@ -195,7 +195,7 @@ onMounted(() => {
                       alt="商品圖片"
                       style="width: 52px; height: 52px; object-fit: cover"
                     />
-                    <p class="mb-0 fw-bold d-inline-block">
+                    <p class="mb-0 fw-bold d-inline-block ps-2">
                       {{ cartItem.product.title }}
                     </p>
                   </th>
