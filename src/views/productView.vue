@@ -192,7 +192,7 @@ onMounted(() => {
                         </h4>
                         <p class="card-text mb-0">
                           <strong> ${{ item.price }} </strong>
-                          <span class="text-muted"
+                          <span class="text-muted ps-2"
                             ><del>${{ item.origin_price }}</del></span
                           >
                         </p>
