@@ -6,7 +6,7 @@
       <div
         class="d-flex align-items-center justify-content-between text-white mb-md-7 mb-4"
       >
-        <a class="text-white h4" href="/">SOUXI</a>
+        <router-link class="text-white h4" to="/">SOUXI</router-link>
         <ul class="d-flex list-unstyled mb-0 h4">
           <li>
             <a
